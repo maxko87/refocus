@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Refocus.io</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="bootstrap-verticaltabs/bootstrap.css" rel="stylesheet" media="screen">
+	<link href="bootstrap-verticaltabs/bootstrap-verticaltabs.css" rel="stylesheet" media="screen">
+    <link href="css/layout.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="bootstrap-verticaltabs/bootstrap-tab.js"></script>
+	<script src="bootstrap-verticaltabs/bootstrap-transition.js"></script>
+	<!--<script type="text/javascript" src="bootstrap-verticaltabs/jquery-1.7.1.js"></script>-->
+    <script src="js/index.js"></script>
+
+
+
+    <div class="row-fluid" id="topBar">
+      <div class="span9 btn-group text-center">
+        <button class="btn" id="focusBtn">FOCUS</button>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      
+      <!--<iframe class="span9" height="10000" src="http://www.stevemiller.net/puretext/"></iframe> -->
+	  <div class="span2">
+	  <div class="tabbable verticaltabs-container">
+		<ul class="nav nav-tabs">
+			<li class="active" id="progresstab"><a href="#progress" data-toggle="tab">Hide</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane fade active in" id="progress">
+				<h3 class="text-center">Progress List</h3>
+				<ul>
+				  <li>Drag Links Here to Add</li>
+				</ul>
+			</div>
+		</div>
+      </div>
+	  </div>
+	  
+	  <iframe class="span9" height="10000" src="http://www.texasmonthly.com/story/mistress-and-narcotraficante"></iframe> <!--80% smaller? -->
+	  
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+      </div>
+      <div class="modal-body">
+        <p id="modalContent"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" id="modalPrevBtn"> << </button>
+        <button class="btn" id="modalNextBtn"> >> </button>
+      </div>
+    </div>
+
+
+
+  </body>
+</html>
