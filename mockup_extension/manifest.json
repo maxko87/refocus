@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+
+  "name": "Refocus",
+  "description": "Allows people with ADHD to read comprehend lengthy articles online.",
+  "version": "1.0",
+
+  "permissions": [
+    "http://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["http://www.theglobalmail.org/feature/resort-of-last-resort/585/"],
+      "css": ["bootstrap/css/bootstrap.min.css", "css/layout.css"],
+      "js": ["bootstrap/js/bootstrap.min.js","js/jquery.js", "js/index.js"]
+    }
+  ]
+}
