@@ -10,8 +10,24 @@ body, html{
     text-align: center;
 }
 
+#topBar{
+	text-align:center;
+}
+
 #modalContent{
     text-align: justify;
     line-height: 1em;
     font-size: 16;
+}
+
+#proglist{
+	position: absolute;
+}
+
+.hide{
+	display:none;
+}
+
+.hideprog{
+	width:20px;
 }

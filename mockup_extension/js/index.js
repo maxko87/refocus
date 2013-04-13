@@ -6,10 +6,26 @@ $(document).ready(function() {
 
     //buttons at the top
     $('body').prepend('<div class="row-fluid" id="topBar"> \
-                          <div class="span9 btn-group text-center"> \
+                          <div class="btn-group text-center"> \
                             <button class="btn" id="focusBtn">FOCUS</button> \
                           </div> \
                         </div>');
+						
+	//progress bar
+	$('body').prepend('<div class="span2" id="proglist"> \
+						  <div class="tabbable verticaltabs-container"> \
+							<ul class="nav nav-tabs"> \
+								<li class="active" id="progresstab"><a href="#progress" data-toggle="tab">Hide</a></li> \
+							</ul> \
+							<div class="tab-content" id="tab-cont"> \
+								<div class="tab-pane fade active in" id="progress"> \
+									<h3 class="text-center">Progress List</h3> \
+									<ul><li>Drag Links Here to Add</li></ul> \
+								</div> \
+							</div> \
+						  </div> \
+					  </div>');
+	
     //modal
     $('body').append('<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> \
                           <div class="modal-header"> \
@@ -104,6 +120,30 @@ $(document).ready(function() {
 
     $('#myModal').on('hidden', function () {
         $('#myModal').removeAttr('keypress');
+    });
+	
+	//Kai
+	//hide and open progress bar
+	var proghidden = false;
+	$('#progresstab').click(function(){
+		console.log('clicked');
+        if (proghidden == false){
+			//hide progress bar content
+			$("#tab-cont").addClass("hide");
+			
+			//reduce width of progress bar
+			$("#proglist").addClass("hideprog");
+			
+			//change to true
+			proghidden = true;
+        }
+		else {
+			//restore the progress bar content
+			$("#tab-cont").removeClass("hide");
+			$("#proglist").removeClass("hideprog");
+			//change to false;
+			proghidden = false;
+		}
     });
 
 });
