@@ -48,14 +48,20 @@ $(document).ready(function() {
             $('#modalNextBtn').attr("disabled", true);
     }
 
+    //this will need to be smarter about what text on the page to return.
+    var getDocBody = function(){
+        body = $('body').text();
+        return body;
+    }
+
 
     $('#focusBtn').click(function(){
-        alert('clicked');
         if (words.length == 0)
+            data = getDocBody();
             words = smartSplit(data); //array of paragraphs per modal, done only the first time focus'd on that page
-        console.log($('myModal'));
         $('#myModal').modal();
         $('#modalContent').text(words[index]);
+        //jake: put scrolling to words[index] here
     });
 
     $('#modalPrevBtn').click(function(){
@@ -99,8 +105,6 @@ $(document).ready(function() {
     $('#myModal').on('hidden', function () {
         $('#myModal').removeAttr('keypress');
     });
-
-
 
 });
 

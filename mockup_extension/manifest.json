@@ -12,7 +12,7 @@
     {
       "matches": ["http://www.theglobalmail.org/feature/resort-of-last-resort/585/"],
       "css": ["bootstrap/css/bootstrap.min.css", "css/layout.css"],
-      "js": ["bootstrap/js/bootstrap.min.js","js/jquery.js", "js/index.js"]
+      "js": ["js/jquery.js", "bootstrap/js/bootstrap.min.js", "js/index.js"]
     }
   ]
 }
