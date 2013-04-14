@@ -8,16 +8,38 @@ body, html{
     margin: 5px;
     vertical-align: center;
     text-align: center;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 #topBar{
 	text-align:center;
 }
 
+.modal{
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    width: 70%;
+}
+
+.modal-header{
+    margin-top: 2em;
+    margin-bottom: 3em;
+}
+
+.modal-body{
+    margin: .5em !important;
+}
+
+.modal-footer{
+    padding: .2em;
+    background-color: rgba(255, 255, 255, 0.0) !important;
+}
+
 #modalContent{
     text-align: justify;
-    line-height: 1em;
-    font-size: 16;
+    line-height: 1.5em;
+    font-size: 150%;
+    margin-left: 2em;
+    margin-right: 2em;
 }
 
 #proglist{
