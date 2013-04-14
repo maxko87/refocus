@@ -43,13 +43,14 @@ body, html{
 }
 
 #proglist{
-	position: absolute;
+	position: fixed;
 }
 
-.hide{
+.progbar{
+	width:20%;
+	height:100%; 
+}
+
+.hidden{
 	display:none;
-}
-
-.hideprog{
-	width:20px;
 }

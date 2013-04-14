@@ -12,7 +12,7 @@ $(document).ready(function() {
                         </div>');
 						
 	//progress bar
-	$('body').prepend('<div class="span2" id="proglist"> \
+	$('body').prepend('<div class="progbar" id="proglist"> \
 						  <div class="tabbable verticaltabs-container"> \
 							<ul class="nav nav-tabs"> \
 								<li class="active" id="progresstab"><a href="#progress" data-toggle="tab">Hide</a></li> \
@@ -137,22 +137,66 @@ $(document).ready(function() {
 		console.log('clicked');
         if (proghidden == false){
 			//hide progress bar content
-			$("#tab-cont").addClass("hide");
-			
-			//reduce width of progress bar
-			$("#proglist").addClass("hideprog");
+			$("#tab-cont").addClass("hidden");
+			$("#proglist").removeClass("progbar");
+			//$("#proglist").hide("slide", {direction: "left"}, 20);
 			
 			//change to true
 			proghidden = true;
         }
 		else {
 			//restore the progress bar content
-			$("#tab-cont").removeClass("hide");
-			$("#proglist").removeClass("hideprog");
+			$("#tab-cont").removeClass("hidden");
+			$("#proglist").addClass("progbar");
 			//change to false;
 			proghidden = false;
 		}
     });
+	
+	//drag and drop links
+	
+	//find the links on original page - 
+	var links = $("body").find("a");
+	
+	//links in the progress list that we want to exclude from being added to itself.
+	//var pllinks = $("#proglist").find("a"); 
+	//console.log(pllinks);
+	for (var i = 2; i<links.length; i++){
+		console.log('setting up links');
+		var parent = links[i].parentElement;
+		console.log(parent);
+		//can't use draggable on HTML elements...create some new object? clone? not sure how this will work
+		parent.draggable({
+			start: function(e, ui){
+				console.log(e);
+			}
+		});
+	}
+	/**for (var i; i<pllinks.size; i++){
+		if ($.inArray(pllinks[i], links)){
+			//remove link from links
+			links = $.grep(links, function(val) { return val != pllinks[i]; });
+		}
+	}**/
+	
+	//var tblinks = $("#topBar").find("a");	
+	/**for (var i; i<tblinks.size; i++){
+		if ($.inArray(tblinks[i], links)){
+			//remove link from links
+			links = $.grep(links, function(val) { return val != tblinks[i]; });
+		}
+	}**/
+	
+	$("#tab-cont").click(function(){
+		console.log(links);
+	});
+	
+	$("#tab-cont").droppable({
+		drop: function(e, ui){
+			console.log(ui.draggable);
+		}
+	});
+	
 
 });
 
