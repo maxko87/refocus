@@ -3,6 +3,7 @@ $(document).ready(function() {
     var words_per_modal = 25;
     var index = 0;
     var words = [];
+	var proglinks = [];
 
     //buttons at the top
     $('body').prepend('<div class="row-fluid" id="topBar"> \
@@ -20,7 +21,7 @@ $(document).ready(function() {
 							<div class="tab-content" id="tab-cont"> \
 								<div class="tab-pane fade active in" id="progress"> \
 									<h3 class="text-center">Progress List</h3> \
-									<ul><li>Drag Links Here to Add</li></ul> \
+									<ul id="cont-list"><li>Drag Links Here to Add</li></ul> \
 								</div> \
 							</div> \
 						  </div> \
@@ -154,16 +155,28 @@ $(document).ready(function() {
 	//var pllinks = $("#proglist").find("a"); 
 	//console.log(pllinks);
 	for (var i = 2; i<links.length; i++){
-		console.log('setting up links');
-		var parent = links[i].parentElement;
-		console.log(parent);
-		//can't use draggable on HTML elements...create some new object? clone? not sure how this will work
-		parent.draggable({
+		jQuery(links[i]).draggable({
+			helper: "clone",
 			start: function(e, ui){
 				console.log(e);
 			}
 		});
 	}
+	
+	$("#tab-cont").click(function(){
+		console.log(links);
+	});
+	
+	$("#tab-cont").droppable({
+		drop: function(e, ui){
+			console.log(ui.draggable); //.context
+			var linkinfo = ui.draggable.context;
+			$("#cont-list").prepend("<li><a href='"+linkinfo.href+"'>"+linkinfo.outerText+"</a>"+"</li>");
+			proglist.add(ui.draggable.context); //add the ui.draggable.context object to the progress list
+			//check the syntax for the add
+		}
+	});
+	
 	/**for (var i; i<pllinks.size; i++){
 		if ($.inArray(pllinks[i], links)){
 			//remove link from links
@@ -178,16 +191,6 @@ $(document).ready(function() {
 			links = $.grep(links, function(val) { return val != tblinks[i]; });
 		}
 	}**/
-	
-	$("#tab-cont").click(function(){
-		console.log(links);
-	});
-	
-	$("#tab-cont").droppable({
-		drop: function(e, ui){
-			console.log(ui.draggable);
-		}
-	});
 	
 
 });
