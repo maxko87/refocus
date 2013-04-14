@@ -47,6 +47,10 @@ body, html{
 	position: fixed;
 }
 
+#cont-list{
+	list-style-type: none;
+}
+
 .progbar{
 	width:20%;
 	height:100%; 
@@ -54,4 +58,9 @@ body, html{
 
 .hidden{
 	display:none;
+}
+
+.progitem{
+	position: relative;
+	width: 90%;
 }

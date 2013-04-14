@@ -21,7 +21,8 @@ $(document).ready(function() {
 							<div class="tab-content" id="tab-cont"> \
 								<div class="tab-pane fade active in" id="progress"> \
 									<h3 class="text-center">Progress List</h3> \
-									<ul id="cont-list"><li>Drag Links Here to Add</li></ul> \
+									<ul id="cont-list"></ul> \
+									<p class="text-center">Drag Links Here to Add</p> \
 								</div> \
 							</div> \
 						  </div> \
@@ -158,22 +159,28 @@ $(document).ready(function() {
 		jQuery(links[i]).draggable({
 			helper: "clone",
 			start: function(e, ui){
-				console.log(e);
+				//console.log(e);
 			}
 		});
 	}
 	
-	$("#tab-cont").click(function(){
-		console.log(links);
-	});
 	
-	$("#tab-cont").droppable({
+	$("#tab-cont").droppable({		
 		drop: function(e, ui){
-			console.log(ui.draggable); //.context
+			//console.log(ui.draggable); //.context
 			var linkinfo = ui.draggable.context;
-			$("#cont-list").prepend("<li><a href='"+linkinfo.href+"'>"+linkinfo.outerText+"</a>"+"</li>");
-			proglist.add(ui.draggable.context); //add the ui.draggable.context object to the progress list
+			//add icon-remove
+			var string1 = "<li><div class='progitem'>";
+			var atag = "<a href='"+linkinfo.href+"'>"+linkinfo.outerText+"</a>";
+			var closebtn = '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>'; 
+			//"<i class='icon-remove'></i>";
+			$("#cont-list").append(string1+atag+closebtn+"</div></li>");
+			
+			//need icon to remove the link from the progress bar
+			
+			//proglist.add(ui.draggable.context); //add the ui.draggable.context object to the progress list
 			//check the syntax for the add
+			
 		}
 	});
 	
