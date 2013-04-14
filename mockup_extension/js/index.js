@@ -41,17 +41,6 @@ $(document).ready(function() {
                         </div>');
 
 
-    //actually a really dumb split for now
-    var smartSplit = function(data) {
-        words = [
-            "Night is enveloping the hills of Cisarua, a resort town high outside Jakarta, and the area’s evening rituals are beginning. Rainwater thunders down from nearby mountaintops along hundreds of canals and rivulets that go whooshing on into the polluted sink that is Indonesia’s capital.",
-            "Across the bowl-shaped valley, dozens of mosques begin booming the call to prayer, all merging together into an asynchronous whine. In hillside villas, groups of men from Saudi Arabia — some in traditional white thawb robes, some in baggy track pants – load up on the evening’s stock of alcohol, which is banned in their home country. On motorbikes and in cars, pimps begin ferrying in the men’s other vice — Arabic-speaking Indonesian women.",           
-            "Elena and Hernán (all the names in this piece are pseudonyms) soon became a couple, of sorts—he already had a wife and children, and other mistresses. But Elena was different than the docile women he was accustomed to.",
-            "(See the photos behind the story: Barat Ali Batoor’s series from Cisarua, In Between Persecution And Asylum.)",
-            ];
-        return words;
-    }
-
     //makes sure we can press prev/next on the modal, also scrolls
     var fixButtonFocus = function(){
         if (index > 0)
@@ -70,23 +59,26 @@ $(document).ready(function() {
             var element = $("div:contains(\"" + words[index] + "\")");
 
         $('html, body').animate({
-            scrollTop: $(element).offset().top
+            scrollTop: $(element).offset().top - $(window).height()/2
         }, 500);
-
-        console.log(index);
     }
 
     //this will need to be smarter about what text on the page to return.
-    var getDocBody = function(){
-        body = $('body').text();
-        return body;
+    var getModalContents = function(){
+        //body = $('body').text();
+        $('p').each(function(index, current){
+            var p = $(current).text();
+            if (p.length > 30){
+                words.push(p);
+            }
+        });
+        return words;
     }
 
     // BUTTONS!
     $('#focusBtn').click(function(){
         if (words.length == 0){
-            data = getDocBody();
-            words = smartSplit(data); //array of paragraphs per modal, done only the first time focus'd on that page
+            words = getModalContents();
         }
         $('#myModal').modal();
         $('#modalContent').text(words[index]);
