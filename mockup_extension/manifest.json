@@ -12,11 +12,7 @@
     {
       "matches": ["http://www.theglobalmail.org/feature/resort-of-last-resort/585/"],
       "css": ["bootstrap/css/bootstrap.min.css", "bootstrap/css/bootstrap-verticaltabs.css", "css/layout.css"],
-<<<<<<< HEAD
-      "js": ["bootstrap/js/bootstrap-tab.js", "bootstrap/js/bootstrap-transition.js", "js/jquery.js", "js/jquery-scrollto/scripts/jquery.scrollto.js", "bootstrap/js/bootstrap.min.js", "js/index.js"]
-=======
       "js": ["bootstrap/js/bootstrap-tab.js", "bootstrap/js/bootstrap-transition.js", "js/jquery.js", "jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.js", "bootstrap/js/bootstrap.min.js", "js/index.js"]
->>>>>>> 9840c96735ed9610cfc3476378fd29151d6f9e49
     }
   ]
 }
