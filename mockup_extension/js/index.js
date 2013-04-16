@@ -47,6 +47,7 @@ $(document).ready(function() {
 									<h3 class="text-center">Progress List</h3> \
 									<ul id="cont-list"></ul> \
 									<p class="text-center">Drag Links Here to Add</p> \
+									<button class="btn text-right" id="clearCompleted">Clear Completed Articles</button>\
 								</div> \
 							</div> \
 						  </div> \
@@ -157,7 +158,6 @@ $(document).ready(function() {
 			//hide progress bar content
 			$("#tab-cont").addClass("hidden");
 			$("#proglist").removeClass("progbar");
-			//$("#proglist").hide("slide", {direction: "left"}, 20);
 			
 			//change to true
 			proghidden = true;
@@ -192,7 +192,7 @@ $(document).ready(function() {
 	function addToProgress(context){
 		var linkinfo = context;
 		//add icon-remove
-		var string1 = "<li class='progitem'>";
+		var string1 = "<li class='progitem'><input class='span1' type='checkbox'>";
 		var atag = "<a href='"+linkinfo.href+"'>"+linkinfo.textContent+"</a>"; //try either outerText or textContent
 		var closebtn = '<button type="button" class="close xbtn" aria-hidden="true">x</button>'; 
 		var result = $(string1+atag+closebtn+"</li>");
@@ -202,6 +202,18 @@ $(document).ready(function() {
 		$(".xbtn").click(function(){
 			console.log('close link div');
 			$(this).parent().remove();
+			//need to remove from proglinks
+			var ind = proglinks.indexOf(result);
+			proglinks.splice(ind, 1);
+		});
+		
+		$(result.find('input:checkbox')).click(function(e){
+			if (e.target.checked){
+				markComplete(result);
+			}
+			else {
+				markIncomplete(result);
+			}
 		});
 		
 		return result;
@@ -223,24 +235,35 @@ $(document).ready(function() {
 				if (proglinks.indexOf(draggedObj) < 0){ //make sure user does not add a duplicate entry
 					var newItem = addToProgress(context);
 					proglinks.push(draggedObj); //save the new ui.draggable.context to array, keep track of articles
-					//for testing purposed. will not be marking completed in the final UI
-					markCompleted(newItem);
+					
 				}
 			}
 		}
 	});
 	
 	//load the progress bar with the saved information when refreshing or moving between webpages
-	for (var i=0; i<proglist.length; i++) {
-		addToProgress(proglist[i]);
+	for (var i=0; i<proglinks.length; i++) {
+		addToProgress(proglinks[i]);
 	}
 	
 	//mark a link as completed
-	function markCompleted(item){
-		item.prepend("<span class='ui-icon ui-icon-check'></span>"); //add a checkmark to the box, currently not working
-		console.log(item);
-		console.log('checkmark added');
+	function markComplete(item){
+		completed.push(item);
 	}
+	
+	function markIncomplete(item){
+		var ind = completed.indexOf(item);
+		completed.splice(ind, 1);
+	}
+	
+	$('#clearCompleted').click(function(){
+		for (var i=0; i<completed.length; i++){
+			var ind = proglinks.indexOf(completed[i]);
+			proglinks.splice(ind, 1);
+			completed[i].remove();
+		}
+		completed = [];
+	});
 	
 	function markActive(item){
 		item.addClass("activelink");
