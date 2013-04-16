@@ -3,7 +3,7 @@ $(document).ready(function() {
     var words_per_modal = 25;
     var index = 0;
     var words = [];
-	var proglinks = [];
+	var proglinks = []; //attempt at saving the links, currently does not work
 
     //buttons at the top
     $('body').prepend('<div class="row-fluid" id="topBar"> \
@@ -164,25 +164,42 @@ $(document).ready(function() {
 		});
 	}
 	
+	//adding links to the progress list
+	function addToProgress(context){
+		var linkinfo = context;
+		//add icon-remove
+		var string1 = "<li class='progitem'><div>";
+		var atag = "<a href='"+linkinfo.href+"'>"+linkinfo.outerText+"</a>";
+		var closebtn = '<button type="button" class="close xbtn" aria-hidden="true">x</button>'; 
+		$("#cont-list").append(string1+atag+closebtn+"</div></li>");
+		
+		//allow user to remove the link from the progress list
+		$(".xbtn").click(function(){
+			console.log('close link div');
+			$(this).parent().remove();
+		});
+		
+	}
+	
+	//sortable not working
+	$("#cont-list").sortable(); //sort the items in the progress list.
+	$("#cont-list").disableSelection();
+	
 	
 	$("#tab-cont").droppable({		
-		drop: function(e, ui){
-			//console.log(ui.draggable); //.context
-			var linkinfo = ui.draggable.context;
-			//add icon-remove
-			var string1 = "<li><div class='progitem'>";
-			var atag = "<a href='"+linkinfo.href+"'>"+linkinfo.outerText+"</a>";
-			var closebtn = '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>'; 
-			//"<i class='icon-remove'></i>";
-			$("#cont-list").append(string1+atag+closebtn+"</div></li>");
-			
-			//need icon to remove the link from the progress bar
-			
-			//proglist.add(ui.draggable.context); //add the ui.draggable.context object to the progress list
-			//check the syntax for the add
-			
+		drop: function(e, ui){	
+			if (ui.draggable.context.className != 'progitem ui-sortable-helper'){
+				addToProgress(ui.draggable.context);
+				proglinks.push(ui.draggable.context); //save the new ui.draggable.context to array, keep track of articles
+			}
 		}
 	});
+	
+	//load the progress bar with the saved information when refreshing or moving between webpages
+	for (var i=0; i<proglist.length; i++) {
+		addToProgress(proglist[i]);
+	}
+	
 	
 	/**for (var i; i<pllinks.size; i++){
 		if ($.inArray(pllinks[i], links)){
