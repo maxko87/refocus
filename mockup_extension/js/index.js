@@ -6,6 +6,29 @@ $(document).ready(function() {
 	var proglinks = []; //attempt at saving the links, currently does not work
 	var completed = []; //articles that user has finished reading
 
+    var focusOnChunk = function() {
+        var text = window.getSelection().toString();
+        //reset every new selection
+        //var focus_words = text.split(". ");
+        //var focus_index = 0;
+        //for now, we use the same the variables for selection and full focus. TODO
+        words = text.split(". ");
+        index = 0;
+        //add back periods that were split off
+        for (i=0; i<words.length-1; i++)
+            words[i] += ".";
+        $('#myModal').modal();
+        $('#modalContent').text(words[index]);
+        fixButtonFocus();
+    }
+
+    chrome.runtime.onMessage.addListener(
+      function(request, sender, sendResponse) {
+        if (request.action == "focus_on_text"){
+            focusOnChunk();
+        }
+      });
+
     //buttons at the top
     $('body').prepend('<div class="row-fluid" id="topBar"> \
                           <div class="btn-group text-center"> \
@@ -67,7 +90,7 @@ $(document).ready(function() {
     }
 
     //this will need to be smarter about what text on the page to return.
-    var getModalContents = function(){
+    var getFullPageFocusContents = function(){
         //body = $('body').text();
         $('p').each(function(index, current){
             var p = $(current).text();
@@ -81,7 +104,7 @@ $(document).ready(function() {
     // BUTTONS!
     $('#focusBtn').click(function(){
         if (words.length == 0){
-            words = getModalContents();
+            words = getFullPageFocusContents();
         }
         $('#myModal').modal();
         $('#modalContent').text(words[index]);
