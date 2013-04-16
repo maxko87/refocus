@@ -4,6 +4,7 @@ $(document).ready(function() {
     var index = 0;
     var words = [];
 	var proglinks = []; //attempt at saving the links, currently does not work
+	var completed = []; //articles that user has finished reading
 
     //buttons at the top
     $('body').prepend('<div class="row-fluid" id="topBar"> \
@@ -168,10 +169,11 @@ $(document).ready(function() {
 	function addToProgress(context){
 		var linkinfo = context;
 		//add icon-remove
-		var string1 = "<li class='progitem'><div>";
-		var atag = "<a href='"+linkinfo.href+"'>"+linkinfo.outerText+"</a>";
+		var string1 = "<li class='progitem'>";
+		var atag = "<a href='"+linkinfo.href+"'>"+linkinfo.textContent+"</a>"; //try either outerText or textContent
 		var closebtn = '<button type="button" class="close xbtn" aria-hidden="true">x</button>'; 
-		$("#cont-list").append(string1+atag+closebtn+"</div></li>");
+		var result = $(string1+atag+closebtn+"</li>");
+		$("#cont-list").append(result);
 		
 		//allow user to remove the link from the progress list
 		$(".xbtn").click(function(){
@@ -179,18 +181,28 @@ $(document).ready(function() {
 			$(this).parent().remove();
 		});
 		
+		return result;
+		
 	}
 	
-	//sortable not working
-	$("#cont-list").sortable(); //sort the items in the progress list.
+	//sort the items in the progress list.
+	$("#cont-list").sortable(); 
 	$("#cont-list").disableSelection();
 	
 	
 	$("#tab-cont").droppable({		
-		drop: function(e, ui){	
-			if (ui.draggable.context.className != 'progitem ui-sortable-helper'){
-				addToProgress(ui.draggable.context);
-				proglinks.push(ui.draggable.context); //save the new ui.draggable.context to array, keep track of articles
+		drop: function(e, ui){
+			var draggedObj = ui.draggable;
+			var context = draggedObj.context;
+						
+			//make sure we do not an extra entry while sorting
+			if (context.className != 'progitem ui-sortable-helper' && context.className != 'progitem ui-sortable-helper active'){ 
+				if (proglinks.indexOf(draggedObj) < 0){ //make sure user does not add a duplicate entry
+					var newItem = addToProgress(context);
+					proglinks.push(draggedObj); //save the new ui.draggable.context to array, keep track of articles
+					//for testing purposed. will not be marking completed in the final UI
+					markCompleted(newItem);
+				}
 			}
 		}
 	});
@@ -198,6 +210,17 @@ $(document).ready(function() {
 	//load the progress bar with the saved information when refreshing or moving between webpages
 	for (var i=0; i<proglist.length; i++) {
 		addToProgress(proglist[i]);
+	}
+	
+	//mark a link as completed
+	function markCompleted(item){
+		item.prepend("<span class='ui-icon ui-icon-check'></span>"); //add a checkmark to the box, currently not working
+		console.log(item);
+		console.log('checkmark added');
+	}
+	
+	function markActive(item){
+		item.addClass("activelink");
 	}
 	
 	
