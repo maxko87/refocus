@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     var words_per_modal = 25;
     var index = 0;
-    var words = [];
+    var words = []; //each element in an array [p, h] where p = text, h = html
 	var proglinks = []; //attempt at saving the links, currently does not work
 	var completed = []; //articles that user has finished reading
 
