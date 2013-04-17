@@ -17,6 +17,14 @@ body, html{
     size: 100% 100%;
     color: blue;
     background-image: url("http://web.mit.edu/anvishap/www/refocus/focus.png");
+  background-size: 90px auto;
+  background-position: center;
+  width: 100px;
+  height: 30px;
+  border-radius: 10px;
+  border-width: 3px;
+  border-color: #0066cc;
+  
 }
 
 

@@ -39,11 +39,13 @@ $(document).ready(function() {
 
     //buttons at the top
     $('body').prepend('<div class="row-fluid" id="topBar"> \
-                          <div class="btn-group text-center"> \
-                            <button class="focusBtn" id="focusBtn"></button> \
+                          <div class="btn-group"> \
+                            <button class="focusBtn" data-toggle="tooltip" data-placement="bottom" title="Click to go into Focus Mode" id="focusBtn"></button> \
                           </div> \
                         </div>');
 	
+
+    $("#focusBtn").tooltip()
 
 	var progBarVisible = true;
 
