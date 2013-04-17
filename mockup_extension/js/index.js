@@ -164,7 +164,20 @@ $(document).ready(function() {
 			});
 			
         });
-        return words;
+
+        //remove some crap
+        var final_words = []
+        for (i=0; i<words.length; i++){
+            var string = words[i][0];
+            console.log("STR: ");
+            console.log(string);
+            if (string.charAt(0) == string.toUpperCase().charAt(0)){
+                console.log(string.charAt(0));
+                console.log(string.toUpperCase().charAt(0));
+                final_words.push(words[i]);
+            }
+        }
+        return final_words;
     }
 	
 	
