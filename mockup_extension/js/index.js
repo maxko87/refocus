@@ -139,26 +139,35 @@ $(document).ready(function() {
             var p = $(current).text();
 			
 			//console.log($(current));
-			var l = $(current).context.outerHTML;
+			var h = $(current).context.outerHTML;
 			//console.log($(current).find("a") == []);
-			//l = l.replace(/<a>/g,/<span>/);
-			//console.log(l);
+			//h = h.replace(/<a>/g,/<span>/);
+			//console.log(h);
 			
             if (p.length > 30){
-                words.push([p,l]);
+                words.push([p,h]); //keep both text (p) and html (h)
             }
+			
+			//how to access link in the modalContent?
+			console.log($("#modalContent.p").outerHTML);
+			
+			//KAI trying to make link work
+			$("#modalContent > p > a").on("click", function(e){
+				console.log('add to progress bar');
+				
+				e.preventDefault();
+				e.returnValue = false;
+				
+				addToProgress($(this).context);
+				
+				return False;
+			});
+			
         });
         return words;
     }
 	
-	//KAI
-	$("#modalContent").children().click(function(e){
-		e.returnValue = false;
-		
-		console.log('add to progress bar');
-		
-		return False;
-	});
+	
 
     // BUTTONS!
     $('#focusBtn').click(function(){
@@ -249,7 +258,7 @@ $(document).ready(function() {
 	//drag and drop links
 	
 	//find the links on original page - 
-	var links = $("body").find("a");
+	var links = $("#article").find("a");
 	
 	//links in the progress list that we want to exclude from being added to itself.
 	//var pllinks = $("#proglist").find("a"); 
