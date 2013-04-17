@@ -40,7 +40,7 @@ $(document).ready(function() {
     //buttons at the top
     $('body').prepend('<div class="row-fluid" id="topBar"> \
                           <div class="btn-group text-center"> \
-                            <button class="btn" id="focusBtn">FOCUS</button> \
+                            <button class="focusBtn" id="focusBtn"></button> \
                           </div> \
                         </div>');
 	
@@ -66,13 +66,18 @@ $(document).ready(function() {
     	if(progBarVisible){
     		$(".progbar").css("width", "2%");
     		$(".progbar-content").css("visibility", "hidden");
-			$(".refocus-logo").css("display", "none");
+			$(".refocus-logo").css("visibility", "hidden");
+			$(".hide-arrow").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/black_unhide_arrow.png)");
+			$(".hide-arrow:hover").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_unhide_arrow.png)");
+
     		progBarVisible = false;
     	}
     	else{
     		$(".progbar").css("width", "20%");
     		$(".progbar-content").css("visibility", "visible");
-			$(".refocus-logo").css("display", "none");
+			$(".refocus-logo").css("visibility", "visible");
+			$(".hide-arrow").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/black_hide_arrow.png)");
+			$(".hide-arrow:hover").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_hide_arrow.png)");
 
     		progBarVisible = true;
     	}

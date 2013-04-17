@@ -16,8 +16,7 @@ body, html{
     position: relative;
     size: 100% 100%;
     color: blue;
-    background-color: rgba(0,0,0,0);
-    /* background-image: linear-gradient(to bottom, #0066cc, #0099ff); */
+    background-image: url("http://web.mit.edu/anvishap/www/refocus/focus.png");
 }
 
 
@@ -135,10 +134,10 @@ body, html{
 
 }
 
-.hide-arrow{
-    background-image: url('http://cdn1.iconfinder.com/data/icons/brightmix/128/monotone_arrow_right.png') ;
+.hide-arrow, .hide-arrow:visited{
+    background-image: url('http://web.mit.edu/anvishap/www/refocus/black_hide_arrow.png') ;
     position: relative;
-    background-size: 100% 100%;
+    background-size: 50px auto;
     background-position: center;
     background-repeat: no-repeat;
   width: 20px;
@@ -150,9 +149,10 @@ body, html{
 
 }
 
-#clearCompleted{
-    position: relative;
-    left: 20%;
+.hide-arrow:hover{
+    background-image: url('http://web.mit.edu/anvishap/www/refocus/grey_hide_arrow.png') ;
+
+
 }
 
 .hidden{
@@ -162,6 +162,11 @@ body, html{
 .progitem{
 	position: relative;
 	width: 90%;
+}
+
+.clear-completed{
+    position: relative;
+    left: 60%;
 }
 
 
