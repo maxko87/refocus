@@ -187,6 +187,14 @@ $(document).ready(function() {
         }
     });
 
+    //hide/show focus button on modal shown/hidden
+    $('#myModal').on('shown', function () {
+        $('#topBar').fadeOut('slow');
+    });
+    $('#myModal').on('hidden', function () {
+        $('#topBar').fadeIn('slow');
+    })
+
 
     //map keyboard shortcuts to stuff
     $('html').keypress(function(e){

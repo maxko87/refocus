@@ -15,10 +15,9 @@ body, html{
     vertical-align: center;
     position: relative;
     size: 100% 100%;
-    color: white;
-    background-color: ;
-    background-image: linear-gradient(to bottom, #0066cc, #0099ff);
-
+    color: blue;
+    background-color: rgba(0,0,0,0);
+    /* background-image: linear-gradient(to bottom, #0066cc, #0099ff); */
 }
 
 
