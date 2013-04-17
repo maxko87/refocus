@@ -107,6 +107,8 @@ body, html{
 .text-center{
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1.5em;
+    color: grey;
+    font-weight: 2pt;
 }
 
 .text-center-smaller{
