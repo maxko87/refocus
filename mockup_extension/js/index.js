@@ -46,15 +46,11 @@ $(document).ready(function() {
                         </div>');
 	
 
-	var progBarVisible = false;
+	var progBarVisible = true;
 
-    function toggleProgressBar(){
-    	if(progBarVisible){
-    		$('body').removeClass('progbar');
-    	}
-    	else{
-    		alert("visible");
-    		$('body').prepend('<div class="progbar" id="proglist">\
+	$('body').prepend('<div class="progbar" id="proglist">\
+    							<div class="hide-arrow">\
+    							</div>\
     							<div class="progbar-content">\
     								<h3 class="text-center"> Progress List </h3> \
     									<ul id="cont-list"></ul> \
@@ -62,9 +58,18 @@ $(document).ready(function() {
 										<button class="btn text-right" id="clearCompleted">Clear Completed Articles</button>\
 								</div> \
 							</div>     							');
-    		current
 
-    		$('.progbar').css('')
+    function toggleProgressBar(){
+    	if(progBarVisible){
+    		$(".progbar").css("width", "2%");
+    		$(".progbar-content").css("visibility", "hidden");
+    		progBarVisible = false;
+    	}
+    	else{
+    		$(".progbar").css("width", "25%");
+    		$(".progbar-content").css("visibility", "visible");
+
+    		progBarVisible = true;
     	}
 
     }
@@ -185,10 +190,17 @@ $(document).ready(function() {
 	
 	//Kai
 	//hide and open progress bar
-	var proghidden = false;
-	$('#progresstab').click(function(){
-		console.log('clicked');
+
+	$('.hide-arrow').click(function() {
+		alert("clicked");
 		toggleProgressBar();
+	}
+		);
+
+	var proghidden = false;
+	//$('#progresstab').click(function(){
+	//	console.log('clicked');
+	//	toggleProgressBar();
 		/*
         if (proghidden == false){
 			//hide progress bar content
@@ -206,7 +218,7 @@ $(document).ready(function() {
 			proghidden = false;
 		}
 		*/
-    });
+    //});
 	
 	//drag and drop links
 	
@@ -306,7 +318,6 @@ $(document).ready(function() {
 		item.addClass("activelink");
 	}
 
-	toggleProgressBar();
 	
 	
 	/**for (var i; i<pllinks.size; i++){
