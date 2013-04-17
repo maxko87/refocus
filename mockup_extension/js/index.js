@@ -53,10 +53,12 @@ $(document).ready(function() {
     						<div class="hide-arrow">\
     						</div>\
     						<div class="progbar-content">\
-    							<p class="text-center"> PROGRESS LIST </p> \
+    							<p class="text-center"> Progress List </p> \
     							<ul id="cont-list"></ul> \
-								<p class="text-center-smaller">Drag Links Here to Add</p> \
-								<button class="btn text-right" id="clearCompleted">Clear Completed Articles</button>\
+    							<div class="drag-links-here">\
+									<p class="text-center-smaller">Drag and drop links that you want to explore later</p> \
+								</div> \
+								<a class="clear-completed" id="clearCompleted">Clear Completed</a>\
 							</div> \
 					</div> ');
 
@@ -76,24 +78,6 @@ $(document).ready(function() {
     	}
 
     }
-
-    var oldBodyText = '<div class="progbar span2" id="proglist"> \
-						  <div class="tabbable verticaltabs-container"> \
-							<ul class="nav nav-tabs"> \
-								<li class="active" id="progresstab"><a href="#progress" data-toggle="tab">Hide</a></li> \
-							</ul> \
-							<div class="tab-content" id="tab-cont"> \
-								<div class="tab-pane fade active in" id="progress"> \
-									<h3 class="text-center">Progress List</h3> \
-									<ul id="cont-list"></ul> \
-									<p class="text-center">Drag Links Here to Add</p> \
-									<button class="btn text-right" id="clearCompleted">Clear Completed Articles</button>\
-								</div> \
-							</div> \
-						  </div> \
-					  </div>'
-	//progress bar
-	
 	
     //modal
     $('body').append('<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> \
@@ -249,27 +233,6 @@ $(document).ready(function() {
 		);
 
 	var proghidden = false;
-	//$('#progresstab').click(function(){
-	//	console.log('clicked');
-	//	toggleProgressBar();
-		/*
-        if (proghidden == false){
-			//hide progress bar content
-			$("#tab-cont").addClass("hidden");
-			$("#proglist").removeClass("progbar");
-			
-			//change to true
-			proghidden = true;
-        }
-		else {
-			//restore the progress bar content
-			$("#tab-cont").removeClass("hidden");
-			$("#proglist").addClass("progbar");
-			//change to false;
-			proghidden = false;
-		}
-		*/
-    //});
 	
 	//drag and drop links
 	
@@ -288,7 +251,8 @@ $(document).ready(function() {
 				$(this).css("z-index",100000);
 			},
 			zIndex: 100000,
-			appendTo: 'body'
+			appendTo: 'body',
+			cursorAt: {left: 0}
 		});
 	}
 	
@@ -342,9 +306,19 @@ $(document).ready(function() {
 					
 				}
 			}
+
+			$('.progbar-content').css('border-style','none');
+			$('.drag-links-here').remove();
+
+		},
+
+		activate: function(){
+			$('.progbar-content').css('border-style','dashed');
 		}
+
 	});
-	
+
+
 	//load the progress bar with the saved information when refreshing or moving between webpages
 	/*for (var i=0; i<proglinks.length; i++) {
 		addToProgress(proglinks[i]);

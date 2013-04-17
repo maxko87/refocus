@@ -77,24 +77,26 @@ body, html{
 }
 
 .refocus-logo{
+
     background-image: url('http://web.mit.edu/anvishap/www/refocus.png');
     height: 50px;
     width: 100%;
     position: relative;
     top: 0px;
-    background-size: auto 50px;
+    background-size: auto 60px;
     background-repeat: no-repeat;
     background-position: center;
-    border-bottom: solid;
-    border-bottom-width: 1px;
+    padding: 5px;
+    border-bottom: none;
+    left: -2px;
 }
 
 .progbar{
 
-    font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
+    font-family: Georgia, Helvetica, Arial, sans-serif;
     top: 0px;
     padding-top: 0px;
-    z-index: 1000;
+    z-index: 10000;
     position: absolute;
     right: 0px;
     float: right;
@@ -104,13 +106,19 @@ body, html{
   border-width: 1px;
   border-color: #e3e3e3;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1)));
+  padding-left: 2px;
+  padding-right: 2px;
+
 }
 
 .text-center{
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 1.5em;
+    font-family: Georgia, Helvetica, Arial, sans-serif;
+    font-size: 1.4em;
     color: grey;
     font-weight: 2pt;
+    font-style: italic;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
 }
 
 .text-center-smaller{
@@ -118,6 +126,13 @@ body, html{
     font-size: 1.2em;
     font-style: italic;
     text-align: center;
+}
+
+.drag-links-here:hover{
+    /*border-style: dashed;
+    border-width: 2px;*/
+    border-style: none;
+
 }
 
 .hide-arrow{
