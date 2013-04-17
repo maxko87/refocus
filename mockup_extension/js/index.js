@@ -123,11 +123,6 @@ $(document).ready(function() {
             
             e.preventDefault();
             e.returnValue = false;
-            
-			console.log(proglinks.indexOf($(this).context.href));
-			console.log(proglinks.indexOf($(this).context.href) < 0);
-			console.log($(this).context.href);
-			console.log(proglinks);
 			
 			//don't add duplicates
 			if (proglinks.indexOf($(this).context.href) < 0){
@@ -141,7 +136,7 @@ $(document).ready(function() {
     //this will need to be smarter about what text on the page to return.
     var getFullPageFocusContents = function(){
         //body = $('body').text();
-        $('p').each(function(index, current){
+        $('#article').find('p').each(function(index, current){
             var p = $(current).text();
 			
 			var h = $(current).context.outerHTML;
