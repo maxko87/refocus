@@ -64,11 +64,13 @@ $(document).ready(function() {
     	if(progBarVisible){
     		$(".progbar").css("width", "2%");
     		$(".progbar-content").css("visibility", "hidden");
+			$(".logo").css("display", "none");
     		progBarVisible = false;
     	}
     	else{
     		$(".progbar").css("width", "20%");
     		$(".progbar-content").css("visibility", "visible");
+			$(".logo").css("display", "none");
 
     		progBarVisible = true;
     	}
@@ -120,10 +122,10 @@ $(document).ready(function() {
         else
             $('#modalNextBtn').attr("disabled", true);
 
-        var element = $("body p:contains(\"" + words[index].substring(0, Math.min(words[index].length, 10)) + "\")").not($('#modalContent'));
+        var element = $("body p:contains(\"" + words[index][0].substring(0, Math.min(words[index][0].length, 10)) + "\")").not($('#modalContent'));
         console.log(element);
         if (!element)
-            var element = $("div:contains(\"" + words[index] + "\")");
+            var element = $("div:contains(\"" + words[index][0] + "\")");
 
         $('html, body').animate({
             scrollTop: $(element).offset().top - $(window).height()/2
@@ -135,12 +137,28 @@ $(document).ready(function() {
         //body = $('body').text();
         $('p').each(function(index, current){
             var p = $(current).text();
+			
+			//console.log($(current));
+			var l = $(current).context.outerHTML;
+			//console.log($(current).find("a") == []);
+			//l = l.replace(/<a>/g,/<span>/);
+			//console.log(l);
+			
             if (p.length > 30){
-                words.push(p);
+                words.push([p,l]);
             }
         });
         return words;
     }
+	
+	//KAI
+	$("#modalContent").children().click(function(e){
+		e.returnValue = false;
+		
+		console.log('add to progress bar');
+		
+		return False;
+	});
 
     // BUTTONS!
     $('#focusBtn').click(function(){
@@ -148,7 +166,7 @@ $(document).ready(function() {
             words = getFullPageFocusContents();
         }
         $('#myModal').modal();
-        $('#modalContent').text(words[index]);
+        $('#modalContent').html(words[index][1]); //KAI changed from text to html
         fixButtonFocus();
         //jake: put scrolling to words[index] here
     });
@@ -156,7 +174,7 @@ $(document).ready(function() {
     $('#modalPrevBtn').click(function(){
         if (!$('#modalPrevBtn').is(":disabled")){
             index -= 1
-            $('#modalContent').text(words[index]);
+            $('#modalContent').html(words[index][1]); //KAI changed from text to html
             fixButtonFocus();
         }
     });
@@ -164,7 +182,7 @@ $(document).ready(function() {
     $('#modalNextBtn').click(function(){
         if (!$('#modalNextBtn').is(":disabled")){
             index += 1
-            $('#modalContent').text(words[index]);
+            $('#modalContent').html(words[index][1]); //KAI changed from text to html
             fixButtonFocus();
         }
     });
