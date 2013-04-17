@@ -6,6 +6,8 @@ $(document).ready(function() {
 	var proglinks = []; //attempt at saving the links, currently does not work
 	var completed = []; //articles that user has finished reading
 
+
+
     var focusOnChunk = function() {
         var text = window.getSelection().toString();
         //reset every new selection
@@ -29,15 +31,45 @@ $(document).ready(function() {
         }
       });
 
+
+    //setup page
+    $('body').children().wrapAll('<div id="article" class="container-fluid scrollable article-content"/>');
+	
+	alert("hi");
+	
+
     //buttons at the top
     $('body').prepend('<div class="row-fluid" id="topBar"> \
                           <div class="btn-group text-center"> \
                             <button class="btn" id="focusBtn">FOCUS</button> \
                           </div> \
                         </div>');
-						
-	//progress bar
-	$('body').prepend('<div class="progbar" id="proglist"> \
+	
+
+	var progBarVisible = false;
+
+    function toggleProgressBar(){
+    	if(progBarVisible){
+    		$('body').removeClass('progbar');
+    	}
+    	else{
+    		alert("visible");
+    		$('body').prepend('<div class="progbar" id="proglist">\
+    							<div class="progbar-content">\
+    								<h3 class="text-center"> Progress List </h3> \
+    									<ul id="cont-list"></ul> \
+										<p class="text-center">Drag Links Here to Add</p> \
+										<button class="btn text-right" id="clearCompleted">Clear Completed Articles</button>\
+								</div> \
+							</div>     							');
+    		current
+
+    		$('.progbar').css('')
+    	}
+
+    }
+
+    var oldBodyText = '<div class="progbar span2" id="proglist"> \
 						  <div class="tabbable verticaltabs-container"> \
 							<ul class="nav nav-tabs"> \
 								<li class="active" id="progresstab"><a href="#progress" data-toggle="tab">Hide</a></li> \
@@ -51,7 +83,9 @@ $(document).ready(function() {
 								</div> \
 							</div> \
 						  </div> \
-					  </div>');
+					  </div>'
+	//progress bar
+	
 	
     //modal
     $('body').append('<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> \
@@ -154,6 +188,8 @@ $(document).ready(function() {
 	var proghidden = false;
 	$('#progresstab').click(function(){
 		console.log('clicked');
+		toggleProgressBar();
+		/*
         if (proghidden == false){
 			//hide progress bar content
 			$("#tab-cont").addClass("hidden");
@@ -169,6 +205,7 @@ $(document).ready(function() {
 			//change to false;
 			proghidden = false;
 		}
+		*/
     });
 	
 	//drag and drop links
@@ -268,6 +305,8 @@ $(document).ready(function() {
 	function markActive(item){
 		item.addClass("activelink");
 	}
+
+	toggleProgressBar();
 	
 	
 	/**for (var i; i<pllinks.size; i++){

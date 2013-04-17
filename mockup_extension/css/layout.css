@@ -52,8 +52,16 @@ body, html{
 }
 
 .progbar{
-	width:20%;
-	height:100%; 
+    z-index: 50000;
+    position: absolute;
+    right: 0px;
+    float: right;
+    height:100%;
+    width: 25%;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #e3e3e3;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1)));
 }
 
 .hidden{
@@ -63,6 +71,13 @@ body, html{
 .progitem{
 	position: relative;
 	width: 90%;
+}
+
+
+#article{
+    position: absolute;
+    width: 75%;
+    overflow: auto;
 }
 
 .activelink{
