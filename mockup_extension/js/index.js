@@ -112,6 +112,7 @@ $(document).ready(function() {
 
     //makes sure we can press prev/next on the modal, also scrolls
     var fixButtonFocus = function(){
+        //hide/show correct buttons
         if (index > 0)
             $('#modalPrevBtn').attr("disabled", false);
         else
@@ -122,6 +123,7 @@ $(document).ready(function() {
         else
             $('#modalNextBtn').attr("disabled", true);
 
+        //scroll to text
         var element = $("body p:contains(\"" + words[index][0].substring(0, Math.min(words[index][0].length, 10)) + "\")").not($('#modalContent'));
         console.log(element);
         if (!element)
@@ -131,7 +133,19 @@ $(document).ready(function() {
             scrollTop: $(element).offset().top - $(window).height()/2
         }, 500);
 
-        //$('#myModal').offset().top = 
+
+        //KAI trying to make link work
+        //set listener for clicks
+        $("#modalContent > p > a").on("click", function(e){
+            console.log('add to progress bar');
+            
+            e.preventDefault();
+            e.returnValue = false;
+            
+            addToProgress($(this).context);
+            
+            return False;
+        }); 
     }
 
     //this will need to be smarter about what text on the page to return.
@@ -152,18 +166,6 @@ $(document).ready(function() {
 			
 			//how to access link in the modalContent?
 			console.log($("#modalContent.p").outerHTML);
-			
-			//KAI trying to make link work
-			$("#modalContent > p > a").on("click", function(e){
-				console.log('add to progress bar');
-				
-				e.preventDefault();
-				e.returnValue = false;
-				
-				addToProgress($(this).context);
-				
-				return False;
-			});
 			
         });
 
