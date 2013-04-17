@@ -35,7 +35,6 @@ $(document).ready(function() {
     //setup page
     $('body').children().wrapAll('<div id="article" class="container-fluid scrollable article-content"/>');
 	
-	alert("hi");
 	
 
     //buttons at the top
@@ -49,15 +48,17 @@ $(document).ready(function() {
 	var progBarVisible = true;
 
 	$('body').prepend('<div class="progbar" id="proglist">\
-    							<div class="hide-arrow">\
-    							</div>\
-    							<div class="progbar-content">\
-    								<h3 class="text-center"> Progress List </h3> \
-    									<ul id="cont-list"></ul> \
-										<p class="text-center">Drag Links Here to Add</p> \
-										<button class="btn text-right" id="clearCompleted">Clear Completed Articles</button>\
-								</div> \
-							</div>     							');
+							<div class="logo">\
+							</div>\
+    						<div class="hide-arrow">\
+    						</div>\
+    						<div class="progbar-content">\
+    							<p class="text-center"> PROGRESS LIST </p> \
+    							<ul id="cont-list"></ul> \
+								<p class="text-center-smaller">Drag Links Here to Add</p> \
+								<button class="btn text-right" id="clearCompleted">Clear Completed Articles</button>\
+							</div> \
+					</div> ');
 
     function toggleProgressBar(){
     	if(progBarVisible){
@@ -66,7 +67,7 @@ $(document).ready(function() {
     		progBarVisible = false;
     	}
     	else{
-    		$(".progbar").css("width", "25%");
+    		$(".progbar").css("width", "20%");
     		$(".progbar-content").css("visibility", "visible");
 
     		progBarVisible = true;
@@ -192,7 +193,6 @@ $(document).ready(function() {
 	//hide and open progress bar
 
 	$('.hide-arrow').click(function() {
-		alert("clicked");
 		toggleProgressBar();
 	}
 		);
@@ -233,7 +233,10 @@ $(document).ready(function() {
 			helper: "clone",
 			start: function(e, ui){
 				//console.log(e);
-			}
+				$(this).css("position", "relative");
+				$(this).css("z-index",70000);
+			},
+			zIndex: 70000,
 		});
 	}
 	
@@ -274,7 +277,7 @@ $(document).ready(function() {
 	$("#cont-list").disableSelection();
 	
 	
-	$("#tab-cont").droppable({		
+	$(".progbar-content").droppable({		
 		drop: function(e, ui){
 			var draggedObj = ui.draggable;
 			var context = draggedObj.context;

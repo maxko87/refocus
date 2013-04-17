@@ -16,26 +16,27 @@ body, html{
     position: relative;
     size: 100% 100%;
     color: white;
-    background-color: #006dcc;
-    background-image: linear-gradient(to bottom, #0088cc, #0044cc);
+    background-color: ;
+    background-image: linear-gradient(to bottom, #0066cc, #0099ff);
+
 }
 
 
 #topBar{
 	text-align:center;
-    border-style: solid;
+    background-color: white;
     position: fixed;
     top: 0px;
     left: 40%;
     margin-left: auto;
     margin-right: auto;
-    width: 10%;
+    width: 100px;
     z-index: 50000;
 
-  border-width: 1px;
+  /*border-width: 1px;
   border-color: #e3e3e3;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1)));
-
+*/
 }
 
 .modal{
@@ -74,7 +75,22 @@ body, html{
 	list-style-type: none;
 }
 
+.logo{
+    background-image: url('http://web.mit.edu/anvishap/www/refocus.png');
+    height: 50px;
+    width: 100%;
+    position: relative;
+    top: 0px;
+    background-size: auto 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-bottom: solid;
+    border-bottom-width: 1px;
+}
+
 .progbar{
+
+    font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
     top: 0px;
     padding-top: 0px;
     z-index: 50000;
@@ -87,6 +103,18 @@ body, html{
   border-width: 1px;
   border-color: #e3e3e3;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1)));
+}
+
+.text-center{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.5em;
+}
+
+.text-center-smaller{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.2em;
+    font-style: italic;
+    text-align: center;
 }
 
 .hide-arrow{
@@ -104,6 +132,11 @@ body, html{
 
 }
 
+#clearCompleted{
+    position: relative;
+    left: 20%;
+}
+
 .hidden{
 	display:none;
 }
@@ -115,7 +148,8 @@ body, html{
 
 
 #article{
-    position: absolute;
+    position: relative;
+    top: 10px;
     width: 75%;
     overflow: auto;
 }
