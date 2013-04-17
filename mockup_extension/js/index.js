@@ -3,7 +3,7 @@ $(document).ready(function() {
     var words_per_modal = 25;
     var index = 0;
     var words = []; //each element in an array [p, h] where p = text, h = html
-	var proglinks = []; //attempt at saving the links, currently does not work
+	var proglinks = []; //list of links in progress bar, ui.draggable.context.href
 	var completed = []; //articles that user has finished reading
 
 
@@ -133,8 +133,6 @@ $(document).ready(function() {
             scrollTop: $(element).offset().top - $(window).height()/2
         }, 500);
 
-
-        //KAI trying to make link work
         //set listener for clicks
         $("#modalContent > p > a").on("click", function(e){
             console.log('add to progress bar');
@@ -142,9 +140,17 @@ $(document).ready(function() {
             e.preventDefault();
             e.returnValue = false;
             
-            addToProgress($(this).context);
-            
-            return False;
+			console.log(proglinks.indexOf($(this).context.href));
+			console.log(proglinks.indexOf($(this).context.href) < 0);
+			console.log($(this).context.href);
+			console.log(proglinks);
+			
+			//don't add duplicates
+			if (proglinks.indexOf($(this).context.href) < 0){
+			    addToProgress($(this).context);
+				proglinks.push($(this).context.href);
+			}
+			
         }); 
     }
 
@@ -154,18 +160,11 @@ $(document).ready(function() {
         $('p').each(function(index, current){
             var p = $(current).text();
 			
-			//console.log($(current));
 			var h = $(current).context.outerHTML;
-			//console.log($(current).find("a") == []);
-			//h = h.replace(/<a>/g,/<span>/);
-			//console.log(h);
 			
             if (p.length > 30){
                 words.push([p,h]); //keep both text (p) and html (h)
             }
-			
-			//how to access link in the modalContent?
-			console.log($("#modalContent.p").outerHTML);
 			
         });
 
@@ -307,7 +306,7 @@ $(document).ready(function() {
 			console.log('close link div');
 			$(this).parent().remove();
 			//need to remove from proglinks
-			var ind = proglinks.indexOf(result);
+			var ind = proglinks.indexOf(linkinfo.href);
 			proglinks.splice(ind, 1);
 		});
 		
@@ -336,9 +335,9 @@ $(document).ready(function() {
 						
 			//make sure we do not an extra entry while sorting
 			if (context.className != 'progitem ui-sortable-helper' && context.className != 'progitem ui-sortable-helper active'){ 
-				if (proglinks.indexOf(draggedObj) < 0){ //make sure user does not add a duplicate entry
+				if (proglinks.indexOf(context.href) < 0){ //make sure user does not add a duplicate entry
 					var newItem = addToProgress(context);
-					proglinks.push(draggedObj); //save the new ui.draggable.context to array, keep track of articles
+					proglinks.push(context.href); //save the new ui.draggable.context to array, keep track of articles
 					
 				}
 			}
@@ -346,9 +345,9 @@ $(document).ready(function() {
 	});
 	
 	//load the progress bar with the saved information when refreshing or moving between webpages
-	for (var i=0; i<proglinks.length; i++) {
+	/*for (var i=0; i<proglinks.length; i++) {
 		addToProgress(proglinks[i]);
-	}
+	}*/
 	
 	//mark a link as completed
 	function markComplete(item){
@@ -372,23 +371,6 @@ $(document).ready(function() {
 	function markActive(item){
 		item.addClass("activelink");
 	}
-
-	
-	
-	/**for (var i; i<pllinks.size; i++){
-		if ($.inArray(pllinks[i], links)){
-			//remove link from links
-			links = $.grep(links, function(val) { return val != pllinks[i]; });
-		}
-	}**/
-	
-	//var tblinks = $("#topBar").find("a");	
-	/**for (var i; i<tblinks.size; i++){
-		if ($.inArray(tblinks[i], links)){
-			//remove link from links
-			links = $.grep(links, function(val) { return val != tblinks[i]; });
-		}
-	}**/
 	
 
 });
