@@ -130,6 +130,8 @@ $(document).ready(function() {
         $('html, body').animate({
             scrollTop: $(element).offset().top - $(window).height()/2
         }, 500);
+
+        //$('#myModal').offset().top = 
     }
 
     //this will need to be smarter about what text on the page to return.
