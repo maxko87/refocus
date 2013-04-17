@@ -288,6 +288,7 @@ $(document).ready(function() {
 				$(this).css("z-index",100000);
 			},
 			zIndex: 100000,
+			appendTo: 'body'
 		});
 	}
 	
