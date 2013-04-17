@@ -48,7 +48,7 @@ $(document).ready(function() {
 	var progBarVisible = true;
 
 	$('body').prepend('<div class="progbar" id="proglist">\
-							<div class="logo">\
+							<div class="refocus-logo">\
 							</div>\
     						<div class="hide-arrow">\
     						</div>\
@@ -64,13 +64,13 @@ $(document).ready(function() {
     	if(progBarVisible){
     		$(".progbar").css("width", "2%");
     		$(".progbar-content").css("visibility", "hidden");
-			$(".logo").css("display", "none");
+			$(".refocus-logo").css("display", "none");
     		progBarVisible = false;
     	}
     	else{
     		$(".progbar").css("width", "20%");
     		$(".progbar-content").css("visibility", "visible");
-			$(".logo").css("display", "none");
+			$(".refocus-logo").css("display", "none");
 
     		progBarVisible = true;
     	}
@@ -269,9 +269,9 @@ $(document).ready(function() {
 			start: function(e, ui){
 				//console.log(e);
 				$(this).css("position", "relative");
-				$(this).css("z-index",70000);
+				$(this).css("z-index",100000);
 			},
-			zIndex: 70000,
+			zIndex: 100000,
 		});
 	}
 	

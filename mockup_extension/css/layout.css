@@ -74,7 +74,7 @@ body, html{
 	list-style-type: none;
 }
 
-.logo{
+.refocus-logo{
     background-image: url('http://web.mit.edu/anvishap/www/refocus.png');
     height: 50px;
     width: 100%;
@@ -92,7 +92,7 @@ body, html{
     font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
     top: 0px;
     padding-top: 0px;
-    z-index: 50000;
+    z-index: 1000;
     position: absolute;
     right: 0px;
     float: right;
