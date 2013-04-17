@@ -2,8 +2,8 @@ $(document).ready(function() {
 
     var words_per_modal = 25;
     var index = 0;
-    var words = [];
-	var proglinks = []; //attempt at saving the links, currently does not work
+    var words = []; //each element in an array [p, h] where p = text, h = html
+	var proglinks = []; //list of links in progress bar, ui.draggable.context.href
 	var completed = []; //articles that user has finished reading
 
 
@@ -112,6 +112,7 @@ $(document).ready(function() {
 
     //makes sure we can press prev/next on the modal, also scrolls
     var fixButtonFocus = function(){
+        //hide/show correct buttons
         if (index > 0)
             $('#modalPrevBtn').attr("disabled", false);
         else
@@ -122,6 +123,7 @@ $(document).ready(function() {
         else
             $('#modalNextBtn').attr("disabled", true);
 
+        //scroll to text
         var element = $("body p:contains(\"" + words[index][0].substring(0, Math.min(words[index][0].length, 10)) + "\")").not($('#modalContent'));
         console.log(element);
         if (!element)
@@ -130,6 +132,26 @@ $(document).ready(function() {
         $('html, body').animate({
             scrollTop: $(element).offset().top - $(window).height()/2
         }, 500);
+
+        //set listener for clicks
+        $("#modalContent > p > a").on("click", function(e){
+            console.log('add to progress bar');
+            
+            e.preventDefault();
+            e.returnValue = false;
+            
+			console.log(proglinks.indexOf($(this).context.href));
+			console.log(proglinks.indexOf($(this).context.href) < 0);
+			console.log($(this).context.href);
+			console.log(proglinks);
+			
+			//don't add duplicates
+			if (proglinks.indexOf($(this).context.href) < 0){
+			    addToProgress($(this).context);
+				proglinks.push($(this).context.href);
+			}
+			
+        }); 
     }
 
     //this will need to be smarter about what text on the page to return.
@@ -138,33 +160,27 @@ $(document).ready(function() {
         $('p').each(function(index, current){
             var p = $(current).text();
 			
-			//console.log($(current));
 			var h = $(current).context.outerHTML;
-			//console.log($(current).find("a") == []);
-			//h = h.replace(/<a>/g,/<span>/);
-			//console.log(h);
 			
             if (p.length > 30){
                 words.push([p,h]); //keep both text (p) and html (h)
             }
 			
-			//how to access link in the modalContent?
-			console.log($("#modalContent.p").outerHTML);
-			
-			//KAI trying to make link work
-			$("#modalContent > p > a").on("click", function(e){
-				console.log('add to progress bar');
-				
-				e.preventDefault();
-				e.returnValue = false;
-				
-				addToProgress($(this).context);
-				
-				return False;
-			});
-			
         });
-        return words;
+
+        //remove some crap
+        var final_words = []
+        for (i=0; i<words.length; i++){
+            var string = words[i][0];
+            console.log("STR: ");
+            console.log(string);
+            if (string.charAt(0) == string.toUpperCase().charAt(0)){
+                console.log(string.charAt(0));
+                console.log(string.toUpperCase().charAt(0));
+                final_words.push(words[i]);
+            }
+        }
+        return final_words;
     }
 	
 	
@@ -290,7 +306,7 @@ $(document).ready(function() {
 			console.log('close link div');
 			$(this).parent().remove();
 			//need to remove from proglinks
-			var ind = proglinks.indexOf(result);
+			var ind = proglinks.indexOf(linkinfo.href);
 			proglinks.splice(ind, 1);
 		});
 		
@@ -319,9 +335,9 @@ $(document).ready(function() {
 						
 			//make sure we do not an extra entry while sorting
 			if (context.className != 'progitem ui-sortable-helper' && context.className != 'progitem ui-sortable-helper active'){ 
-				if (proglinks.indexOf(draggedObj) < 0){ //make sure user does not add a duplicate entry
+				if (proglinks.indexOf(context.href) < 0){ //make sure user does not add a duplicate entry
 					var newItem = addToProgress(context);
-					proglinks.push(draggedObj); //save the new ui.draggable.context to array, keep track of articles
+					proglinks.push(context.href); //save the new ui.draggable.context to array, keep track of articles
 					
 				}
 			}
@@ -329,9 +345,9 @@ $(document).ready(function() {
 	});
 	
 	//load the progress bar with the saved information when refreshing or moving between webpages
-	for (var i=0; i<proglinks.length; i++) {
+	/*for (var i=0; i<proglinks.length; i++) {
 		addToProgress(proglinks[i]);
-	}
+	}*/
 	
 	//mark a link as completed
 	function markComplete(item){
@@ -355,23 +371,6 @@ $(document).ready(function() {
 	function markActive(item){
 		item.addClass("activelink");
 	}
-
-	
-	
-	/**for (var i; i<pllinks.size; i++){
-		if ($.inArray(pllinks[i], links)){
-			//remove link from links
-			links = $.grep(links, function(val) { return val != pllinks[i]; });
-		}
-	}**/
-	
-	//var tblinks = $("#topBar").find("a");	
-	/**for (var i; i<tblinks.size; i++){
-		if ($.inArray(tblinks[i], links)){
-			//remove link from links
-			links = $.grep(links, function(val) { return val != tblinks[i]; });
-		}
-	}**/
 	
 
 });
