@@ -293,7 +293,7 @@ $(document).ready(function() {
 	$("#cont-list").disableSelection();
 	
 	
-	$(".progbar-content").droppable({		
+	$(".progbar").droppable({		
 		drop: function(e, ui){
 			var draggedObj = ui.draggable;
 			var context = draggedObj.context;
