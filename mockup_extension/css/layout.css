@@ -109,6 +109,7 @@ body, html{
     float: right;
     height:100%;
     width: 20%;
+    min-width: 300px;
   border-style: solid;
   border-width: 1px;
   border-color: #e3e3e3;

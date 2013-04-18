@@ -7,23 +7,33 @@ $(document).ready(function() {
 	var completed = []; //articles that user has finished reading
 
 
-
+    //FULL OF HACKS
     var focusOnChunk = function() {
         var text = window.getSelection().toString();
+        console.log(text);
         //reset every new selection
         //var focus_words = text.split(". ");
         //var focus_index = 0;
         //for now, we use the same the variables for selection and full focus. TODO
-        words = text.split(". ");
+        var pre_words = text.split(". ");
+        console.log(pre_words);
         index = 0;
-        //add back periods that were split off
-        for (i=0; i<words.length-1; i++)
-            words[i] += ".";
-        $('#myModal').modal();
-        $('#modalContent').text(words[index]);
-        fixButtonFocus();
-    }
+        //convert to [text,html] (actually [text, text] for now)
+        for (i=0; i<pre_words.length; i++){
+            words.push( [pre_words[i], pre_words[i]] );
+        }     
 
+        //add back periods that were split off
+        for (i=0; i<words.length-1; i++){
+            words[i][0] += ".";
+            words[i][1] += ".";
+        }           
+        $('#myModal').modal();
+        $('#modalContent').text(words[0][1]);
+        fixButtonFocus();
+        console.log(words);
+    }
+ 
     chrome.runtime.onMessage.addListener(
       function(request, sender, sendResponse) {
         if (request.action == "focus_on_text"){
@@ -116,7 +126,6 @@ $(document).ready(function() {
 
         //scroll to text
         var element = $("body p:contains(\"" + words[index][0].substring(0, Math.min(words[index][0].length, 10)) + "\")").not($('#modalContent'));
-        console.log(element);
         if (!element)
             var element = $("div:contains(\"" + words[index][0] + "\")");
 
@@ -158,8 +167,6 @@ $(document).ready(function() {
         var final_words = []
         for (i=0; i<words.length; i++){
             var string = words[i][0];
-            console.log("STR: ");
-            console.log(string);
             if (string.charAt(0) == string.toUpperCase().charAt(0)){
                 console.log(string.charAt(0));
                 console.log(string.toUpperCase().charAt(0));
@@ -179,7 +186,6 @@ $(document).ready(function() {
         $('#myModal').modal();
         $('#modalContent').html(words[index][1]); //KAI changed from text to html
         fixButtonFocus();
-        //jake: put scrolling to words[index] here
     });
 
     $('#modalPrevBtn').click(function(){
@@ -285,6 +291,20 @@ $(document).ready(function() {
 				markIncomplete(result);
 			}
 		});
+
+        //update link title asynchronously
+        $.ajax({
+            url: linkinfo.href
+        }).done(function(data) {
+            console.log(data);
+            var matches = data.match(/<title>(.*?)<\/title>/);
+            if (matches){
+                var newTitle = matches[1];
+                var link = $('.progbar a[href$=\"' + linkinfo.href + '\"]');
+                link.text( newTitle );
+                //link.text( newTitle + "(" + link.text() + ")" );
+            }
+        });
 		
 		return result;
 		
