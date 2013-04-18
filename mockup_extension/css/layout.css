@@ -17,13 +17,13 @@ body, html{
     size: 100% 100%;
     color: blue;
     background-image: url("http://web.mit.edu/anvishap/www/refocus/focus.png");
-  background-size: 90px auto;
-  background-position: center;
-  width: 100px;
-  height: 30px;
-  border-radius: 10px;
-  border-width: 3px;
-  border-color: #0066cc;
+	background-size: 90px auto;
+	background-position: center;
+	width: 100px;
+	height: 30px;
+	border-radius: 10px;
+	border-width: 3px;
+	border-color: #0066cc;
   
 }
 
@@ -109,13 +109,13 @@ body, html{
     float: right;
     height:100%;
     width: 20%;
-    min-width: 300px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #e3e3e3;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1)));
-  padding-left: 2px;
-  padding-right: 2px;
+    /*min-width: 300px;*/
+	border-style: solid;
+	border-width: 1px;
+	border-color: #e3e3e3;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1)));
+	padding-left: 2px;
+	padding-right: 2px;
 
 }
 
