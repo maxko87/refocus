@@ -70,7 +70,6 @@ $(document).ready(function() {
     		$(".progbar-content").css("visibility", "hidden");
 			$(".refocus-logo").css("visibility", "hidden");
 			$(".hide-arrow").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/black_unhide_arrow.png)");
-			$(".hide-arrow:hover").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_unhide_arrow.png)");
 
     		progBarVisible = false;
     	}
@@ -79,7 +78,6 @@ $(document).ready(function() {
     		$(".progbar-content").css("visibility", "visible");
 			$(".refocus-logo").css("visibility", "visible");
 			$(".hide-arrow").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/black_hide_arrow.png)");
-			$(".hide-arrow:hover").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_hide_arrow.png)");
 
     		progBarVisible = true;
     	}

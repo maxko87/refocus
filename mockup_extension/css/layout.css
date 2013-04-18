@@ -151,11 +151,13 @@ body, html{
   width: 20px;
   left: 0px;
   top: 50%;
-  height: 30px;
+  height: 60px;
   z-index: 60000;
     vertical-align: auto;
 
 }
+
+
 
 .hide-arrow:hover{
     background-image: url('http://web.mit.edu/anvishap/www/refocus/grey_hide_arrow.png') ;
