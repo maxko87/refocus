@@ -119,6 +119,12 @@ body, html{
 
 }
 
+.progbar-content{
+    position: absolute;
+    top: 60px;
+    width: 100%;
+}
+
 .text-center{
     font-family: Georgia, Helvetica, Arial, sans-serif;
     font-size: 1.4em;
@@ -176,8 +182,10 @@ body, html{
 }
 
 .clear-completed{
-    position: relative;
-    left: 60%;
+    position: absolute;
+    right: 30px;
+    bottom: -20px;
+
 }
 
 
