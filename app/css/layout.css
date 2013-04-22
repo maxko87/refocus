@@ -1,0 +1,191 @@
+body, html{
+    min-height: 100%;
+    min-width: 100%;
+    padding: 1em;
+}
+
+.btn{
+    margin: 5px;
+    vertical-align: center;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#focusBtn{
+    vertical-align: center;
+    position: relative;
+    size: 100% 100%;
+    color: blue;
+    background-image: url("http://web.mit.edu/anvishap/www/refocus/focus.png");
+  background-size: 90px auto;
+  background-position: center;
+  width: 100px;
+  height: 30px;
+  border-radius: 10px;
+  border-width: 3px;
+  border-color: #0066cc;
+  
+}
+
+
+#topBar{
+	text-align:center;
+    background-color: white;
+    position: fixed;
+    top: 0px;
+    left: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100px;
+    z-index: 50000;
+
+  /*border-width: 1px;
+  border-color: #e3e3e3;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1)));
+*/
+}
+
+.modal{
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    width: 70%;
+    /* margin-top: -15% !important; */
+    position: absolute;
+}
+
+.modal-header{
+    margin-top: 2em;
+    margin-bottom: 3em;
+}
+
+.modal-body{
+    margin: .5em !important;
+}
+
+.modal-footer{
+    padding: .2em;
+    background-color: rgba(255, 255, 255, 0.0) !important;
+}
+
+#modalContent p{
+    text-align: justify;
+    line-height: 1.5em;
+    font-size: 150%;
+    margin-left: 2em;
+    margin-right: 2em;
+	font-family: arial;
+}
+
+#proglist{
+	position: fixed;
+}
+
+#cont-list{
+	list-style-type: none;
+}
+
+.refocus-logo{
+
+    background-image: url('http://web.mit.edu/anvishap/www/refocus.png');
+    height: 50px;
+    width: 100%;
+    position: relative;
+    top: 0px;
+    background-size: auto 60px;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 5px;
+    border-bottom: none;
+    left: -2px;
+}
+
+.progbar{
+
+    font-family: Georgia, Helvetica, Arial, sans-serif;
+    top: 0px;
+    padding-top: 0px;
+    z-index: 10000;
+    position: absolute;
+    right: 0px;
+    float: right;
+    height:100%;
+    width: 20%;
+    min-width: 300px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #e3e3e3;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1)));
+  padding-left: 2px;
+  padding-right: 2px;
+
+}
+
+.text-center{
+    font-family: Georgia, Helvetica, Arial, sans-serif;
+    font-size: 1.4em;
+    color: grey;
+    font-weight: 2pt;
+    font-style: italic;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+}
+
+.text-center-smaller{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.2em;
+    font-style: italic;
+    text-align: center;
+}
+
+.drag-links-here:hover{
+    /*border-style: dashed;
+    border-width: 2px;*/
+    border-style: none;
+
+}
+
+.hide-arrow, .hide-arrow:visited{
+    background-image: url('http://web.mit.edu/anvishap/www/refocus/black_hide_arrow.png') ;
+    position: relative;
+    background-size: 50px auto;
+    background-position: center;
+    background-repeat: no-repeat;
+  width: 20px;
+  left: 0px;
+  top: 50%;
+  height: 30px;
+  z-index: 60000;
+    vertical-align: auto;
+
+}
+
+.hide-arrow:hover{
+    background-image: url('http://web.mit.edu/anvishap/www/refocus/grey_hide_arrow.png') ;
+
+
+}
+
+.hidden{
+	display:none;
+}
+
+.progitem{
+	position: relative;
+	width: 90%;
+}
+
+.clear-completed{
+    position: relative;
+    left: 60%;
+}
+
+
+#article{
+    position: relative;
+    top: 10px;
+    width: 75%;
+    overflow: auto;
+}
+
+.activelink{
+	font-weight:bold;
+}
