@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Refocus",
-  "description": "Allows people with ADHD to read comprehend lengthy articles online.",
+  "description": "Allows people with ADHD to comprehend lengthy articles online.",
   "version": "1.2",
 
   "background": {
@@ -14,7 +14,7 @@
 
   "content_scripts": [
     {
-      "matches": ["http://*/*", "http://www.theglobalmail.org/feature/resort-of-last-resort/585/"],
+      "matches": ["http://www.theglobalmail.org/*", "http://www.boston.com/*", "http://*.cnn.com/*"],
       "css": ["bootstrap/css/bootstrap.min.css", "bootstrap/css/bootstrap-verticaltabs.css", "css/layout.css"],
       "js": ["bootstrap/js/bootstrap-tab.js", "bootstrap/js/bootstrap-transition.js", "js/jquery.js", "jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.js", "bootstrap/js/bootstrap.min.js", "js/index.js"]
     }
