@@ -39,7 +39,20 @@ $(document).ready(function() {
         if (request.action == "focus_on_text"){
             focusOnChunk();
         }
+		
+		//if item was added to progress list
+		if (request.action == "update_proglist_add"){
+			console.log('update progress list, add');
+            //use addProgList somehow...
+        }
+		
+		//if item was removed from progress list
+		if (request.action == "update_proglist_remove"){
+			console.log('update progress list, remove');
+			//create a new function that removes from progress lists
+		}
       });
+	
 
 
     //setup page
