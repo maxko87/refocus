@@ -150,26 +150,72 @@ $(document).ready(function() {
     }
 
     //this will need to be smarter about what text on the page to return.
+    var MAX_CHAR_MODAL_LEN = 350;
+    var MIN_CHAR_MODAL_LEN = 30;
+    var SENTENCES_PER_CHUNK_PREF = 2;
+
     var getFullPageFocusContents = function(){
         //body = $('body').text();
-        $('#article').find('p').each(function(index, current){
-            var p = $(current).text();
-			
-			var h = $(current).context.outerHTML;
-			
-            if (p.length > 30){
-                words.push([p,h]); //keep both text (p) and html (h)
+        $('#article').find('p, img').each(function(index, current){
+            if ( $(current).is('img') ){
+                console.log("IMAGE");
+                console.log(current);
+                words.push([current, current]);
             }
-			
+
+            else{
+                var p = $(current).text();
+    			
+    			var h = $(current).context.outerHTML;
+    			
+                if (p.length > MIN_CHAR_MODAL_LEN){
+                    if (p.length < MAX_CHAR_MODAL_LEN){
+                        words.push([p,h]); //keep both text (p) and html (h) 
+                    }
+                    else {
+                        var prelim_words = p.split(". ");
+                        var prelim_words_html = h.split(". ");
+
+                        var queue = "";
+                        var queue_html = "";
+                        var j = 0;
+
+                        for (i=0; i<prelim_words.length; i++){
+                            if (j < SENTENCES_PER_CHUNK_PREF){
+                                queue += prelim_words[i] + ". ";
+                                console.log(prelim_words_html[i]);
+                                queue_html += "<p>" + prelim_words_html[i] + ". "; // ????? add period
+                                j += 1;
+                            }
+                            else if (j == SENTENCES_PER_CHUNK_PREF){
+                                j = 0;
+                                words.push([queue, queue_html]);
+                                queue = "";
+                                queue_html = "";
+                            }
+                        }
+                        if (queue.length != 0){
+                            words.push([queue, queue_html]);
+                        }
+                    }
+                }	
+            }
         });
 
         //remove some crap
         var final_words = []
         for (i=0; i<words.length; i++){
-            var string = words[i][0];
-            if (string.charAt(0) == string.toUpperCase().charAt(0)){
-                console.log(string.charAt(0));
-                console.log(string.toUpperCase().charAt(0));
+            if ( $(current).is('p') ){
+                var string_html = words[i][1];
+                if (string_html.lastIndexOf(".") > string_html.lastIndexOf("</p>") && string_html.lastIndexOf("</p>") > string_html.length - 8){
+                    words[i][1] = string_html.substring(0, string_html.lastIndexOf("."));
+                }
+                var string = words[i][0];
+                if (string.charAt(0) == string.toUpperCase().charAt(0)){
+                    final_words.push(words[i]);
+                }
+            }
+            else{
                 final_words.push(words[i]);
             }
         }
