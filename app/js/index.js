@@ -112,14 +112,12 @@ $(document).ready(function() {
     //modal
     $('body').append('<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> \
                           <div class="modal-header"> \
+                            <button class="btn" id="modalPrevBtn"> << </button> \
+                            <button class="btn" id="modalNextBtn"> >> </button> \
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button> \
                           </div> \
                           <div class="modal-body"> \
                             <p id="modalContent"></p> \
-                          </div> \
-                          <div class="modal-footer"> \
-                            <button class="btn" id="modalPrevBtn"> << </button> \
-                            <button class="btn" id="modalNextBtn"> >> </button> \
                           </div> \
                         </div>');
 
@@ -171,9 +169,16 @@ $(document).ready(function() {
         //body = $('body').text();
         $('#article').find('p, img').each(function(index, current){
             if ( $(current).is('img') ){
-                console.log("IMAGE");
                 console.log(current);
-                words.push([current, current]);
+                console.log($(current));
+                var caption = "<p>" + current.alt + "</p>";
+                var image = "<p>" + current + "</p>";
+                var captioned_image = "<p>" + image + caption + "</p>";
+                console.log(captioned_image);
+                if (current.height > 30 && current.width > 30){
+                    //words.push([captioned_image, captioned_image]); TODO
+                    words.push([current, current]);
+                }
             }
 
             else{
@@ -196,7 +201,6 @@ $(document).ready(function() {
                         for (i=0; i<prelim_words.length; i++){
                             if (j < SENTENCES_PER_CHUNK_PREF){
                                 queue += prelim_words[i] + ". ";
-                                console.log(prelim_words_html[i]);
                                 queue_html += "<p>" + prelim_words_html[i] + ". "; // ????? add period
                                 j += 1;
                             }
@@ -215,23 +219,19 @@ $(document).ready(function() {
             }
         });
 
-        //remove some crap
+        //remove some crap (sentences starting w/ lowercase letters, not ending in periods)
         var final_words = []
         for (i=0; i<words.length; i++){
-            if ( $(current).is('p') ){
-                var string_html = words[i][1];
-                if (string_html.lastIndexOf(".") > string_html.lastIndexOf("</p>") && string_html.lastIndexOf("</p>") > string_html.length - 8){
-                    words[i][1] = string_html.substring(0, string_html.lastIndexOf("."));
-                }
-                var string = words[i][0];
-                if (string.charAt(0) == string.toUpperCase().charAt(0)){
-                    final_words.push(words[i]);
-                }
+            var string_html = words[i][1];
+            if (string_html.lastIndexOf(".") > string_html.lastIndexOf("</p>") && string_html.lastIndexOf("</p>") > string_html.length - 8){
+                words[i][1] = string_html.substring(0, string_html.lastIndexOf("."));
             }
-            else{
+            var string = words[i][0];
+            if (string.charAt(0) == string.toUpperCase().charAt(0)){
                 final_words.push(words[i]);
             }
         }
+        console.log(final_words);
         return final_words;
     }
 	
