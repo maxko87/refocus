@@ -12,6 +12,10 @@
     "http://*/*"
   ],
 
+  "browser_action": {
+    "default_icon": "icon.png"
+  }
+
   "content_scripts": [
     {
       "matches": ["http://www.theglobalmail.org/*", "http://www.boston.com/*", "http://*.cnn.com/*"],
