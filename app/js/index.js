@@ -247,8 +247,8 @@ $(document).ready(function() {
         fixButtonFocus();
     });
 
-    chrome.browserAction.onClicked.addListener(function(tabs.Tab tab) {
-            if (words.length == 0){
+    /*hrome.browserAction.onClicked.addListener(function(tabs.Tab tab) {
+        if (words.length == 0){
             words = getFullPageFocusContents();
         }
         $('#myModal').modal();
@@ -256,7 +256,7 @@ $(document).ready(function() {
         fixButtonFocus();
 
     });
-
+*/
     $('#modalPrevBtn').click(function(){
         if (!$('#modalPrevBtn').is(":disabled")){
             index -= 1
