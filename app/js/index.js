@@ -301,7 +301,6 @@ $(document).ready(function() {
         } 
     });
 	
-	//Kai
 	//hide and open progress bar
 
 	$('.hide-arrow').click(function() {
@@ -350,6 +349,11 @@ $(document).ready(function() {
 			//need to remove from proglinks
 			var ind = proglinks.indexOf(linkinfo.href);
 			proglinks.splice(ind, 1);
+			
+			//send message to background page to update all progress lists
+			chrome.runtime.sendMessage({action: 'remove_from_proglist', URL: linkinfo.href}, function(response){
+				console.log('should receive response -- message has been sent');
+			})
 		});
 		
 		$(result.find('input:checkbox')).click(function(e){

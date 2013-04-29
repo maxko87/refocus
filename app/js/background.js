@@ -17,8 +17,9 @@ chrome.contextMenus.onClicked.addListener(onClickHandler);
 //saving progress list
 
 //start with empty progress list when chrome starts up
-chrome.runtime.onStartUp.addListener(function(){
+chrome.runtime.onEnabled.addListener(function(){
 	var progList = [];
+	console.log('start progList');
 });
 
 //figure out how sendResponse works... may be useful, not sure yet
@@ -34,6 +35,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 		//only need to keep title + URL
 		
 		console.log(progList); //make sure that the list is actually being updated
+		console.log('request received in bg page: remove');
 	}
 });
 
