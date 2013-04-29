@@ -50,7 +50,7 @@ $(document).ready(function() {
     //buttons at the top
     $('body').prepend('<div class="row-fluid" id="topBar"> \
                           <div class="btn-group"> \
-                            <button class="focusBtn" data-toggle="tooltip" data-placement="bottom" title="Click to go into Focus Mode" id="focusBtn"></button> \
+                            <button class="focusBtn" data-toggle="tooltip" data-placement="bottom" title="Click to start Focusing" id="focusBtn"></button> \
                           </div> \
                         </div>');
 	
@@ -65,7 +65,7 @@ $(document).ready(function() {
     						<div class="hide-arrow">\
     						</div>\
     						<div class="progbar-content">\
-    							<p class="text-center"> Progress List </p> \
+    							<p class="text-center"> Links to Visit </p> \
     							<ul id="cont-list"></ul> \
     							<div class="drag-links-here">\
 									<p class="text-center-smaller">Drag and drop links that you want to explore later</p> \
