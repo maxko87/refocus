@@ -140,9 +140,11 @@ $(document).ready(function() {
         if (!element)
             var element = $("div:contains(\"" + words[index][0] + "\")");
 
-        $('html, body').animate({
-            scrollTop: $(element).offset().top - $(window).height()/2
-        }, 500);
+        if ($(element).offset() != null){
+            $('html, body').animate({
+                scrollTop: $(element).offset().top - $(window).height()/2
+            }, 500);
+        }
 
         //set listener for clicks
         $("#modalContent > p > a").on("click", function(e){
@@ -175,7 +177,7 @@ $(document).ready(function() {
                 var image = "<p>" + current + "</p>";
                 var captioned_image = "<p>" + image + caption + "</p>";
                 console.log(captioned_image);
-                if (current.height > 30 && current.width > 30){
+                if (current.height > 100 && current.width > 100){
                     //words.push([captioned_image, captioned_image]); TODO
                     words.push([current, current]);
                 }
@@ -223,11 +225,17 @@ $(document).ready(function() {
         var final_words = []
         for (i=0; i<words.length; i++){
             var string_html = words[i][1];
-            if (string_html.lastIndexOf(".") > string_html.lastIndexOf("</p>") && string_html.lastIndexOf("</p>") > string_html.length - 8){
-                words[i][1] = string_html.substring(0, string_html.lastIndexOf("."));
+            console.log(string_html.toString());
+            if (string_html.toString().indexOf("HTMLImageElement") === -1) {
+                if (string_html.lastIndexOf(".") > string_html.lastIndexOf("</p>") && string_html.lastIndexOf("</p>") > string_html.length - 8){
+                    words[i][1] = string_html.substring(0, string_html.lastIndexOf("."));
+                }
+                var string = words[i][0];
+                if (string.charAt(0) == string.toUpperCase().charAt(0)){
+                    final_words.push(words[i]);
+                }
             }
-            var string = words[i][0];
-            if (string.charAt(0) == string.toUpperCase().charAt(0)){
+            else{
                 final_words.push(words[i]);
             }
         }
@@ -239,6 +247,10 @@ $(document).ready(function() {
 
     // BUTTONS!
     $('#focusBtn').click(function(){
+        console.log(window.getSelection());
+        if (window.getSelection() != ""){
+            focusOnChunk();
+        } 
         if (words.length == 0){
             words = getFullPageFocusContents();
         }
