@@ -189,3 +189,13 @@ body, html{
 .activelink{
 	font-weight:bold;
 }
+
+.error{
+  color: red;
+}
+
+#supported{
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+}

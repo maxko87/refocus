@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    var SUPPORTED_SITES = ["theglobalmail"];
+
     var words_per_modal = 25;
     var index = 0;
     var words = []; //each element in an array [p, h] where p = text, h = html
@@ -85,6 +87,7 @@ $(document).ready(function() {
 								</div> \
 								<a class="clear-completed" id="clearCompleted">Clear Completed</a>\
 							</div> \
+                            <div class=error id=supported></div> \
 					</div> ');
 
     function toggleProgressBar(){
@@ -120,6 +123,19 @@ $(document).ready(function() {
                             <p id="modalContent"></p> \
                           </div> \
                         </div>');
+
+
+    //check if this website is supported
+    my_site = $(location).attr('href');
+    supported = false;
+    for (i=0; i<SUPPORTED_SITES.length; i++){
+        if (my_site.indexOf(SUPPORTED_SITES[i]) != -1){
+            supported = true;
+        }
+    }
+    if (!supported){
+        $('#supported').text("This website is not supported by Refocus.io. Improper chunking may occur.");
+    }
 
 
     //makes sure we can press prev/next on the modal, also scrolls
