@@ -383,9 +383,7 @@ $(document).ready(function() {
 			proglinks.splice(ind, 1);
 			
 			//send message to background page to update all progress lists
-			chrome.runtime.sendMessage({action: 'remove_from_proglist', URL: linkinfo.href}, function(response){
-				console.log('should receive response -- message has been sent');
-			})
+			chrome.runtime.sendMessage({action: 'remove_from_proglist', url: linkinfo.href}, function(response){})
 		});
 		
 		$(result.find('input:checkbox')).click(function(e){
@@ -397,21 +395,22 @@ $(document).ready(function() {
 			}
 		});
 
+		newTitle = linkinfo.textContent;
         //update link title asynchronously
         $.ajax({
             url: linkinfo.href
         }).done(function(data) {
-            console.log(data);
+            //console.log(data);
             var matches = data.match(/<title>(.*?)<\/title>/);
             if (matches){
-                var newTitle = matches[1];
+                newTitle = matches[1];
                 var link = $('.progbar a[href$=\"' + linkinfo.href + '\"]');
                 link.text( newTitle );
                 //link.text( newTitle + "(" + link.text() + ")" );
             }
         });
 		
-		chrome.runtime.sendMessage({action: 'add_to_proglist', URL: linkinfo.href}, function(response){
+		chrome.runtime.sendMessage({action: 'add_to_proglist', url: linkinfo.href, title: newTitle}, function(response){
 			console.log(response.farewell);
 		})
 		
