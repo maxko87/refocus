@@ -36,7 +36,8 @@ $(document).ready(function() {
         console.log(words);
     }
  
-    chrome.runtime.onMessage.addListener(
+	//make sure this still works for the focus on text
+    chrome.extension.onMessage.addListener(
       function(request, sender, sendResponse) {
         if (request.action == "focus_on_text"){
             focusOnChunk();
@@ -277,8 +278,8 @@ $(document).ready(function() {
 
 
     //Precursor to actual functionality of top right icon
-    chrome.browserAction.onClicked.addListener(function(tab) {
-        console.log('Turning ' + tab.url + ' red!');
+//    chrome.browserAction.onClicked.addListener(function(tab) {
+//        console.log('Turning ' + tab.url + ' red!');
 /*        if (words.length == 0){
             words = getFullPageFocusContents();
         }
@@ -286,7 +287,7 @@ $(document).ready(function() {
         $('#modalContent').html(words[index][1]); //KAI changed from text to html
         fixButtonFocus();
 */
-    });
+//    });
 
     $('#modalPrevBtn').click(function(){
         if (!$('#modalPrevBtn').is(":disabled")){
@@ -409,6 +410,10 @@ $(document).ready(function() {
                 //link.text( newTitle + "(" + link.text() + ")" );
             }
         });
+		
+		chrome.runtime.sendMessage({action: 'add_to_proglist', URL: linkinfo.href}, function(response){
+			console.log(response.farewell);
+		})
 		
 		return result;
 		
