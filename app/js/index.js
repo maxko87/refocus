@@ -46,13 +46,29 @@ $(document).ready(function() {
 		//if item was added to progress list
 		if (request.action == "update_proglist_add"){
 			console.log('update progress list, add');
-            //use addProgList somehow...
+			var dup = false;
+			for (var i = 0; i<proglinks.length; i++){
+				if (proglinks[i][0] == request.url){
+					dup = true;
+					break;
+				}
+			}
+			if (!dup){
+				var res = addToProgress(request.url, request.title);
+				proglinks.push([request.url, res]);
+			}
         }
 		
 		//if item was removed from progress list
 		if (request.action == "update_proglist_remove"){
 			console.log('update progress list, remove');
-			//create a new function that removes from progress lists
+			removeFromProgress(request.url);
+			for (var i=0; i<proglinks.length; i++){
+				if (proglinks[i][0] == request.url){
+					proglinks.splice(i, 1);
+					break;
+				}
+			}
 		}
       });
 	
@@ -170,10 +186,17 @@ $(document).ready(function() {
             e.preventDefault();
             e.returnValue = false;
 			
+			var cont = $(this).context;
 			//don't add duplicates
-			if (proglinks.indexOf($(this).context.href) < 0){
-			    addToProgress($(this).context);
-				proglinks.push($(this).context.href);
+			var dup = false;
+			for (var i=0; i<proglinks.length; i++){
+				if (proglinks[i][0] == cont.href){
+					dup = true;
+				}
+			}
+			if (!dup){
+				var res = addToProgress(cont.href, cont.textContent);
+				proglinks.push([cont.href, res]);
 			}
 			
         }); 
@@ -365,11 +388,10 @@ $(document).ready(function() {
 	}
 	
 	//adding links to the progress list
-	function addToProgress(context){
-		var linkinfo = context;
+	function addToProgress(href, title){
 		//add icon-remove
 		var string1 = "<li class='progitem'><input class='span1' type='checkbox'>";
-		var atag = "<a href='"+linkinfo.href+"'>"+linkinfo.textContent+"</a>"; //try either outerText or textContent
+		var atag = "<a href='"+href+"'>"+title+"</a>"; //try either outerText or textContent
 		var closebtn = '<button type="button" class="close xbtn" aria-hidden="true">x</button>'; 
 		var result = $(string1+atag+closebtn+"</li>");
 		$("#cont-list").append(result);
@@ -379,11 +401,14 @@ $(document).ready(function() {
 			console.log('close link div');
 			$(this).parent().remove();
 			//need to remove from proglinks
-			var ind = proglinks.indexOf(linkinfo.href);
-			proglinks.splice(ind, 1);
+			for (var i=0; i<proglinks.length; i++) {
+				if (proglinks[i][0] == href){
+					proglinks.splice(i, 1);
+				}
+			}
 			
 			//send message to background page to update all progress lists
-			chrome.runtime.sendMessage({action: 'remove_from_proglist', url: linkinfo.href}, function(response){})
+			chrome.runtime.sendMessage({action: 'remove_from_proglist', url: href}, function(response){})
 		});
 		
 		$(result.find('input:checkbox')).click(function(e){
@@ -395,27 +420,43 @@ $(document).ready(function() {
 			}
 		});
 
-		newTitle = linkinfo.textContent;
+		newTitle = title;
         //update link title asynchronously
         $.ajax({
-            url: linkinfo.href
+            url: href
         }).done(function(data) {
             //console.log(data);
             var matches = data.match(/<title>(.*?)<\/title>/);
             if (matches){
                 newTitle = matches[1];
-                var link = $('.progbar a[href$=\"' + linkinfo.href + '\"]');
+                var link = $('.progbar a[href$=\"' + href + '\"]');
                 link.text( newTitle );
                 //link.text( newTitle + "(" + link.text() + ")" );
             }
         });
 		
-		chrome.runtime.sendMessage({action: 'add_to_proglist', url: linkinfo.href, title: newTitle}, function(response){
+		chrome.runtime.sendMessage({action: 'add_to_proglist', url: href, title: title}, function(response){
 			console.log(response.farewell);
 		})
 		
+		//proglinks.push([href, result]);
+		
 		return result;
 		
+	}
+	
+	//update other tabs, removed progress item
+	function removeFromProgress(url){
+		console.log('in function removeFromProgress');
+		var currentList = $('#cont-list').find('div');
+		console.log(currentList);
+		var objToRemove = null;
+		for (var i = 0; i < proglinks.length; i++){
+			if (proglinks[i][0] == url){
+				objToRemove = proglinks[i][1];
+			}
+		}
+		objToRemove.remove();
 	}
 	
 	//sort the items in the progress list.
@@ -430,10 +471,16 @@ $(document).ready(function() {
 						
 			//make sure we do not an extra entry while sorting
 			if (context.className != 'progitem ui-sortable-helper' && context.className != 'progitem ui-sortable-helper active'){ 
-				if (proglinks.indexOf(context.href) < 0){ //make sure user does not add a duplicate entry
-					var newItem = addToProgress(context);
-					proglinks.push(context.href); //save the new ui.draggable.context to array, keep track of articles
-					
+				var dup = false;
+				for (var i = 0; i<proglinks.length; i++){
+					if (proglinks[i][0] == context.href){
+						dup = true;
+						break;
+					}
+				}
+				if (!dup){ //make sure user does not add a duplicate entry
+					var newItem = addToProgress(context.href, context.textContent);
+					proglinks.push([context.href, newItem]);
 				}
 			}
 
@@ -448,11 +495,6 @@ $(document).ready(function() {
 
 	});
 
-
-	//load the progress bar with the saved information when refreshing or moving between webpages
-	/*for (var i=0; i<proglinks.length; i++) {
-		addToProgress(proglinks[i]);
-	}*/
 	
 	//mark a link as completed
 	function markComplete(item){
