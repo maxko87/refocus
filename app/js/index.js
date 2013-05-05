@@ -7,7 +7,10 @@ $(document).ready(function() {
     var words = []; //each element in an array [p, h] where p = text, h = html
 	var proglinks = []; //list of links in progress bar, [ui.draggable.context.href, obj]
 	var completed = []; //articles that user has finished reading
-
+	
+	//populate current progress bar with saved proglinks
+	chrome.extension.sendMessage({action: 'populate_proglinks'}, function(response){});
+	console.log('populate proglinks message sent');
 
     //FULL OF HACKS
     var focusOnChunk = function() {
@@ -373,8 +376,6 @@ $(document).ready(function() {
 	var links = $("#article").find("a");
 	
 	//links in the progress list that we want to exclude from being added to itself.
-	//var pllinks = $("#proglist").find("a"); 
-	//console.log(pllinks);
 	for (var i = 2; i<links.length; i++){
 		jQuery(links[i]).draggable({
 			helper: "clone",
@@ -406,6 +407,7 @@ $(document).ready(function() {
 			for (var i=0; i<proglinks.length; i++) {
 				if (proglinks[i][0] == href){
 					proglinks.splice(i, 1);
+					chrome.runtime.sendMessage({action: 'remove_from_proglist', url: href}, function(response){});
 				}
 			}
 			
@@ -435,11 +437,11 @@ $(document).ready(function() {
             }
         });
 		
+		/**
 		chrome.runtime.sendMessage({action: 'add_to_proglist', url: href, title: title}, function(response){
 			console.log(response.farewell);
 		})
-		
-		//proglinks.push([href, result]);
+		**/
 		
 		return result;
 		
@@ -513,7 +515,7 @@ $(document).ready(function() {
 	$('#clearCompleted').click(function(){
 		for (var i=0; i<completed.length; i++){
 			var ind = proglinks.indexOf(completed[i]);
-			chrome.runtime.sendMessage({action: 'remove_from_proglist', url: completed[i][0]}, function(response){})
+			chrome.runtime.sendMessage({action: 'remove_from_proglist', url: completed[i][0]}, function(response){});
 			console.log('completed: '+ completed[i][0]);
 			removeFromProgress(completed[i][0]);
 		}

@@ -23,7 +23,21 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse){
 	else if (request.action == "remove_from_proglist"){
 		removeFromProg(request.url); //need to get item from somewhere...
 	}
+	else if (request.action == "populate_proglinks"){
+		populate();
+	}
 });
+
+//populate progress bar when page is refreshed or changed
+function populate(){
+	chrome.tabs.getSelected(null, function(tab){
+		for (var i=0; i<progList.length; i++){
+			chrome.tabs.sendMessage(tab.id, 
+				{action: "update_proglist_add", url: progList[i][0], title: progList[i][1]}, 
+				function(response) {});
+		}
+	});
+}
 
 
 //add to saved progress list
@@ -36,8 +50,6 @@ function addToProg(link, name) {
 				function(response) {});
 		}
 	});
-	
-	console.log('end of addToProg in bg');
 }
 
 //remove from saved progress list
