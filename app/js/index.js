@@ -172,10 +172,11 @@ $(document).ready(function() {
             $('#modalNextBtn').attr("disabled", true);
 
         //scroll to text
-        var element = $("body p:contains(\"" + words[index][0].substring(0, Math.min(words[index][0].length, 10)) + "\")").not($('#modalContent'));
+        var element = $("body p:contains(\"" + words[index][0].substring(0, Math.min(words[index][0].length, 30)) + "\")").not($('#modalContent'));
         if (!element)
             var element = $("div:contains(\"" + words[index][0] + "\")");
 
+        console.log($(element).offset());
         if ($(element).offset() != null){
             $('html, body').animate({
                 scrollTop: $(element).offset().top - $(window).height()/2
@@ -224,7 +225,7 @@ $(document).ready(function() {
                 console.log(captioned_image);
                 if (current.height > 100 && current.width > 100){
                     //words.push([captioned_image, captioned_image]); TODO
-                    words.push([current, current]);
+                    words.push([$(current).clone(), $(current).clone()]);
                 }
             }
 
@@ -238,8 +239,8 @@ $(document).ready(function() {
                         words.push([p,h]); //keep both text (p) and html (h) 
                     }
                     else {
-                        var prelim_words = p.split(". ");
-                        var prelim_words_html = h.split(". ");
+                        var prelim_words = p.split("\w\w\w. ");
+                        var prelim_words_html = h.split("\w\w\w. ");
 
                         var queue = "";
                         var queue_html = "";
@@ -271,7 +272,9 @@ $(document).ready(function() {
         for (i=0; i<words.length; i++){
             var string_html = words[i][1];
             console.log(string_html.toString());
-            if (string_html.toString().indexOf("HTMLImageElement") === -1) {
+            if (string_html.toString().indexOf("[object Object]") === -1) {
+                console.log("STRING HTML:");
+                console.log(string_html.toString());
                 if (string_html.lastIndexOf(".") > string_html.lastIndexOf("</p>") && string_html.lastIndexOf("</p>") > string_html.length - 8){
                     words[i][1] = string_html.substring(0, string_html.lastIndexOf("."));
                 }
