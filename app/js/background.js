@@ -19,10 +19,8 @@ chrome.contextMenus.onClicked.addListener(onClickHandler);
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse){
 	if (request.action == "add_to_proglist"){
 		addToProg(request.url, request.title);
-		sendResponse({farewell:"progList:" + progList});
-		console.log(progList);
 	}
-	if (request.action == "remove_from_proglist"){
+	else if (request.action == "remove_from_proglist"){
 		removeFromProg(request.url); //need to get item from somewhere...
 	}
 });
@@ -38,6 +36,8 @@ function addToProg(link, name) {
 				function(response) {});
 		}
 	});
+	
+	console.log('end of addToProg in bg');
 }
 
 //remove from saved progress list
@@ -52,8 +52,6 @@ function removeFromProg(link) {
 				function(response) {});
 		}
 	});
-	
-	//refresh all of the other tabs to update the list
 	
 }
 

@@ -5,7 +5,7 @@ $(document).ready(function() {
     var words_per_modal = 25;
     var index = 0;
     var words = []; //each element in an array [p, h] where p = text, h = html
-	var proglinks = []; //list of links in progress bar, ui.draggable.context.href
+	var proglinks = []; //list of links in progress bar, [ui.draggable.context.href, obj]
 	var completed = []; //articles that user has finished reading
 
 
@@ -197,6 +197,8 @@ $(document).ready(function() {
 			if (!dup){
 				var res = addToProgress(cont.href, cont.textContent);
 				proglinks.push([cont.href, res]);
+				//send message to background page to update all progress lists
+				chrome.runtime.sendMessage({action: 'add_to_proglist', url: cont.href}, function(response){});
 			}
 			
         }); 
@@ -407,16 +409,14 @@ $(document).ready(function() {
 				}
 			}
 			
-			//send message to background page to update all progress lists
-			chrome.runtime.sendMessage({action: 'remove_from_proglist', url: href}, function(response){})
 		});
 		
 		$(result.find('input:checkbox')).click(function(e){
 			if (e.target.checked){
-				markComplete(result);
+				markComplete([href, result]);
 			}
 			else {
-				markIncomplete(result);
+				markIncomplete([href, result]);
 			}
 		});
 
@@ -448,15 +448,17 @@ $(document).ready(function() {
 	//update other tabs, removed progress item
 	function removeFromProgress(url){
 		console.log('in function removeFromProgress');
-		var currentList = $('#cont-list').find('div');
-		console.log(currentList);
-		var objToRemove = null;
+		//var currentList = $('#cont-list').find('div');
+		//console.log(currentList);
 		for (var i = 0; i < proglinks.length; i++){
 			if (proglinks[i][0] == url){
-				objToRemove = proglinks[i][1];
+				var objToRemove = proglinks[i][1];
+				objToRemove.remove();
+				proglinks.splice(i, 1);
+				break;
 			}
 		}
-		objToRemove.remove();
+		
 	}
 	
 	//sort the items in the progress list.
@@ -481,6 +483,8 @@ $(document).ready(function() {
 				if (!dup){ //make sure user does not add a duplicate entry
 					var newItem = addToProgress(context.href, context.textContent);
 					proglinks.push([context.href, newItem]);
+					//send message to background page to update all progress lists
+					chrome.runtime.sendMessage({action: 'add_to_proglist', url: context.href}, function(response){});
 				}
 			}
 
@@ -509,8 +513,9 @@ $(document).ready(function() {
 	$('#clearCompleted').click(function(){
 		for (var i=0; i<completed.length; i++){
 			var ind = proglinks.indexOf(completed[i]);
-			proglinks.splice(ind, 1);
-			completed[i].remove();
+			chrome.runtime.sendMessage({action: 'remove_from_proglist', url: completed[i][0]}, function(response){})
+			console.log('completed: '+ completed[i][0]);
+			removeFromProgress(completed[i][0]);
 		}
 		completed = [];
 	});
