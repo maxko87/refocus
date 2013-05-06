@@ -223,19 +223,36 @@ $(document).ready(function() {
 
     var getFullPageFocusContents = function(){
         //body = $('body').text();
-        $('#article').find('p, img').each(function(index, current){
+        $('#article').find('p, img, .large-image-box, .story-header-image').each(function(index, current){
             if ( $(current).is('img') ){
                 console.log(current);
                 console.log($(current));
                 var caption = "<p>" + current.alt + "</p>";
                 var image = "<p>" + current + "</p>";
                 var captioned_image = "<p>" + image + caption + "</p>";
+				console.log(current.alt);
+				console.log(caption);
                 console.log(captioned_image);
                 if (current.height > 100 && current.width > 100){
                     //words.push([captioned_image, captioned_image]); TODO
                     words.push([$(current).clone(), $(current).clone()]);
                 }
             }
+			
+			if ( $(current).is('.large-image-box') ){
+				console.log('large image box found');
+				words.push([$(current).clone(), $(current).clone()]);
+			}
+			
+			if ( $(current).is('.small-image-box') ){
+				console.log('small image box found');
+				words.push([$(current).clone(), $(current).clone()]);
+			}
+			
+			if ( $(current).is('.story-header-image') ){
+				console.log('story header image found');
+				words.push([$(current).clone(), $(current).clone()]);
+			}
 
             else{
                 var p = $(current).text();
