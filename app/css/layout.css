@@ -110,8 +110,7 @@ body, html{
     right: 0px;
     float: right;
     height:100%;
-    width: 20%;
-    min-width: 300px;
+    width: 300px;
   border-style: solid;
   border-width: 1px;
   border-color: #e3e3e3;
@@ -119,6 +118,12 @@ body, html{
   padding-left: 2px;
   padding-right: 2px;
 
+}
+
+.progbar-content{
+    position: absolute;
+    top: 60px;
+    width: 100%;
 }
 
 .text-center{
