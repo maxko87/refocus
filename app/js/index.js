@@ -100,32 +100,34 @@ $(document).ready(function() {
 							</div>\
     						<div class="hide-arrow">\
     						</div>\
-    						<div class="progbar-content">\
-    							<p class="text-center"> Links to Visit </p> \
+                            <div class="progbar-header">\
+                            <p class="text-center"> Links to Visit </p> \
+    						</div>\
+                            <div class="progbar-content scrollable">\
     							<ul id="cont-list"></ul> \
     							<div class="drag-links-here">\
 									<p class="text-center-smaller">Drag and drop links that you want to explore later</p> \
 								</div> \
-								<a class="clear-completed" id="clearCompleted">Clear Completed</a>\
 							</div> \
+                            <a class="clear-completed" id="clearCompleted">Clear Completed</a>\
                             <div class=error id=supported></div> \
 					</div> ');
 
     function toggleProgressBar(){
     	if(progBarVisible){
-    		$(".progbar").css("width", "20px");
+    		$(".progbar").css("width", "30px");
     		$(".progbar-content").css("visibility", "hidden");
 			$(".refocus-logo").css("visibility", "hidden");
-			$(".hide-arrow").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/black_unhide_arrow.png)");
-			$(".hide-arrow:hover").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_unhide_arrow.png)");
+			$(".hide-arrow").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_unhide_arrow.png)");
+			//$(".hide-arrow:hover").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_unhide_arrow.png)");
     		progBarVisible = false;
     	}
     	else{
     		$(".progbar").css("width", "300px");
     		$(".progbar-content").css("visibility", "visible");
 			$(".refocus-logo").css("visibility", "visible");
-			$(".hide-arrow").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/black_hide_arrow.png)");
-			$(".hide-arrow:hover").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_hide_arrow.png)");
+			$(".hide-arrow").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_hide_arrow.png)");
+			//$(".hide-arrow:hover").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_hide_arrow.png)");
 
     		progBarVisible = true;
     	}

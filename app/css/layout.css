@@ -83,6 +83,7 @@ body, html{
 
 #cont-list{
 	list-style-type: none;
+  margin: 0px 0px 0px 20px;
 }
 
 .refocus-logo{
@@ -120,10 +121,19 @@ body, html{
 
 }
 
+.progbar-header{
+  position: absolute;
+  top: 55px;
+  width: 97%;
+
+}
+
 .progbar-content{
     position: absolute;
-    top: 60px;
-    width: 100%;
+    top: 100px;
+    width: 97%;
+    height: 30%;
+    overflow: scroll;
 }
 
 .text-center{
@@ -151,15 +161,15 @@ body, html{
 }
 
 .hide-arrow, .hide-arrow:visited{
-    background-image: url('http://web.mit.edu/anvishap/www/refocus/black_hide_arrow.png') ;
+    background-image: url('http://web.mit.edu/anvishap/www/refocus/grey_hide_arrow.png') ;
     position: relative;
     background-size: 50px auto;
     background-position: center;
     background-repeat: no-repeat;
   width: 20px;
   left: 0px;
-  top: 50%;
-  height: 30px;
+  top: 0px;
+  height: 90%;
   z-index: 60000;
     vertical-align: auto;
 
@@ -167,7 +177,7 @@ body, html{
 
 .hide-arrow:hover{
     background-image: url('http://web.mit.edu/anvishap/www/refocus/grey_hide_arrow.png') ;
-
+    background-color: white;
 
 }
 
@@ -182,9 +192,17 @@ body, html{
 
 .clear-completed{
     position: relative;
-    left: 60%;
+    float: left;
+    float: top;
 }
 
+.checkbox-div{
+  width: 20px;
+}
+
+input[type=checkbox]{
+  padding-right: 5px;
+}
 
 #article{
     position: relative;
