@@ -236,8 +236,9 @@ $(document).ready(function() {
 
     var getFullPageFocusContents = function(){
         //body = $('body').text();
-        $('#article').find('p, img, .large-image-box, .story-header-image').each(function(index, current){
-            if ( $(current).is('img') ){
+        $('#article').find('p, img, .large-image-box, .small-image-box, .story-header-image').each(function(index, current){
+            /**
+			if ( $(current).is('img') ){
                 console.log(current);
                 console.log($(current));
                 var caption = "<p>" + current.alt + "</p>";
@@ -251,20 +252,36 @@ $(document).ready(function() {
                     words.push([$(current).clone(), $(current).clone()]);
                 }
             }
+			**/
 			
 			if ( $(current).is('.large-image-box') ){
 				console.log('large image box found');
-				words.push([$(current).clone(), $(current).clone()]);
+				var $newdiv = $(current).clone();
+				$newdiv.find('.attribution').remove();
+				$newdiv.find('img').click(function(e){
+					e.preventDefault();
+				});
+				words.push([$newdiv, $newdiv]);
 			}
 			
 			if ( $(current).is('.small-image-box') ){
 				console.log('small image box found');
-				words.push([$(current).clone(), $(current).clone()]);
+				var $newdiv = $(current).clone();
+				$newdiv.find('.attribution').remove();
+				$newdiv.find('img').click(function(e){
+					e.preventDefault();
+				});
+				words.push([$newdiv, $newdiv]);
 			}
 			
 			if ( $(current).is('.story-header-image') ){
 				console.log('story header image found');
-				words.push([$(current).clone(), $(current).clone()]);
+				var $newdiv = $(current).clone();
+				$newdiv.find('.attribution').remove();
+				$newdiv.find('img').click(function(e){
+					e.preventDefault();
+				});
+				words.push([$newdiv, $newdiv]);
 			}
 
             else{
