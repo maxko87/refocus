@@ -123,7 +123,6 @@ $(document).ready(function() {
         var windowSize = $("body").css("width");
         progBarWidth = $(".progbar").css("width");
         var articleWidth = windowSize.slice(0, windowSize.length-2) - progBarWidth.slice(0, progBarWidth.length-2);
-        alert(articleWidth);
         $("#article").css("width",articleWidth+"px");
     }
     
