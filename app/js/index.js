@@ -65,13 +65,14 @@ $(document).ready(function() {
 		//if item was removed from progress list
 		if (request.action == "update_proglist_remove"){
 			console.log('update progress list, remove');
-			removeFromProgress(request.url);
 			for (var i=0; i<proglinks.length; i++){
 				if (proglinks[i][0] == request.url){
+					removeFromProgress(proglinks[i][0]);
 					proglinks.splice(i, 1);
 					break;
 				}
 			}
+			//removeFromProgress(request.url);
 		}
       });
 	
@@ -409,8 +410,9 @@ $(document).ready(function() {
 			//need to remove from proglinks
 			for (var i=0; i<proglinks.length; i++) {
 				if (proglinks[i][0] == href){
-					proglinks.splice(i, 1);
 					chrome.runtime.sendMessage({action: 'remove_from_proglist', url: href}, function(response){});
+					proglinks.splice(i, 1);
+					break;
 				}
 			}
 			
@@ -440,12 +442,6 @@ $(document).ready(function() {
             }
         });
 		
-		/**
-		chrome.runtime.sendMessage({action: 'add_to_proglist', url: href, title: title}, function(response){
-			console.log(response.farewell);
-		})
-		**/
-		
 		return result;
 		
 	}
@@ -453,8 +449,6 @@ $(document).ready(function() {
 	//update other tabs, removed progress item
 	function removeFromProgress(url){
 		console.log('in function removeFromProgress');
-		//var currentList = $('#cont-list').find('div');
-		//console.log(currentList);
 		for (var i = 0; i < proglinks.length; i++){
 			if (proglinks[i][0] == url){
 				var objToRemove = proglinks[i][1];
