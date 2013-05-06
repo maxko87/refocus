@@ -192,8 +192,7 @@ body, html{
 
 .clear-completed{
     position: relative;
-    float: left;
-    float: top;
+    top: -20%;
 }
 
 .checkbox-div{

@@ -103,13 +103,17 @@ $(document).ready(function() {
                             <div class="progbar-header">\
                             <p class="text-center"> Links to Visit </p> \
     						</div>\
-                            <div class="progbar-content scrollable">\
-    							<ul id="cont-list"></ul> \
-    							<div class="drag-links-here">\
-									<p class="text-center-smaller">Drag and drop links that you want to explore later</p> \
-								</div> \
-							</div> \
-                            <a class="clear-completed" id="clearCompleted">Clear Completed</a>\
+                            <div class="progbar-body">\
+                                <div class="progbar-content scrollable">\
+        							<ul id="cont-list"></ul> \
+        							<div class="drag-links-here">\
+    									<p class="text-center-smaller">Drag and drop links that you want to explore later</p> \
+    								</div> \
+    							</div> \
+                                <div class="clear-completed">\
+                                    <a class="clear-completed-text" id="clearCompleted">Clear Completed</a>\
+                                </div>\
+                            </div>\
                             <div class=error id=supported></div> \
 					</div> ');
 
@@ -118,6 +122,7 @@ $(document).ready(function() {
     		$(".progbar").css("width", "30px");
     		$(".progbar-content").css("visibility", "hidden");
 			$(".refocus-logo").css("visibility", "hidden");
+            $(".progbar-header").css("visibility", "hidden");
 			$(".hide-arrow").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_unhide_arrow.png)");
 			//$(".hide-arrow:hover").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_unhide_arrow.png)");
     		progBarVisible = false;
@@ -126,6 +131,7 @@ $(document).ready(function() {
     		$(".progbar").css("width", "300px");
     		$(".progbar-content").css("visibility", "visible");
 			$(".refocus-logo").css("visibility", "visible");
+            $(".progbar-header").css("visibility", "visible");
 			$(".hide-arrow").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_hide_arrow.png)");
 			//$(".hide-arrow:hover").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_hide_arrow.png)");
 
@@ -379,6 +385,7 @@ $(document).ready(function() {
 	
 	//find the links on original page - 
 	var links = $("#article").find("a");
+    var zIndexStore = 1;
 	
 	//links in the progress list that we want to exclude from being added to itself.
 	for (var i = 2; i<links.length; i++){
@@ -387,8 +394,12 @@ $(document).ready(function() {
 			start: function(e, ui){
 				//console.log(e);
 				$(this).css("position", "relative");
+                zIndexStore = $(this).css("z-index");
 				$(this).css("z-index",100000);
 			},
+            stop: function(e,ui){
+                $(this).css("z-index", zIndexStore);
+            },
 			zIndex: 100000,
 			appendTo: 'body',
 			cursorAt: {left: 0}
@@ -489,7 +500,7 @@ $(document).ready(function() {
 			}
 
 			$('.progbar-content').css('border-style','none');
-			$('.drag-links-here').remove();
+			//$('.drag-links-here').remove();
 
 		},
 
