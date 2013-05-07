@@ -106,15 +106,15 @@ $(document).ready(function() {
     						</div>\
                             <div class="progbar-body">\
                                 <div class="progbar-content scrollable">\
-        							<ul id="cont-list"></ul> \
-        							<div class="drag-links-here">\
+        							<ul id="cont-list">\
+        							<li><div class="drag-links-here">\
     									<p class="text-center-smaller">Drag and drop links that you want to explore later</p> \
-    								</div> \
-    							</div> \
-                                <div class="clear-completed">\
+    								</div></li> \
+                                    <li>\
                                     <a class="clear-completed-text" id="clearCompleted">Clear Completed</a>\
+                                    </li>\
+                                    </ul>\
                                 </div>\
-                            </div>\
                             <div class=error id=supported></div> \
 					</div> ');
 
@@ -456,11 +456,11 @@ $(document).ready(function() {
 	//adding links to the progress list
 	function addToProgress(href, title){
 		//add icon-remove
-		var string1 = "<li class='progitem'><input class='span1' type='checkbox'>";
-		var atag = "<a href='"+href+"'>"+title+"</a>"; //try either outerText or textContent
-		var closebtn = '<button type="button" class="close xbtn" aria-hidden="true">x</button>'; 
-		var result = $(string1+atag+closebtn+"</li>");
-		$("#cont-list").append(result);
+		var string1 = "<li class='progitem'><div class='checkbox-div'><input type='checkbox'/></div>";
+		var atag = "<div class='linkitem'><a href='"+href+"'>"+title+"</a></div>"; //try either outerText or textContent
+		var closebtn = '<div class="xbtn-div"><button type="button" class="close xbtn" aria-hidden="true">x</button></div>'; 
+		var result = $(string1+closebtn+atag+"</li>");
+		$("#cont-list").prepend(result);
 		
 		//allow user to remove the link from the progress list
 		$(".xbtn").click(function(){

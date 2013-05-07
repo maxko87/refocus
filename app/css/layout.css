@@ -132,7 +132,7 @@ body, html{
     position: absolute;
     top: 100px;
     width: 97%;
-    height: 30%;
+    height: 90%;
     overflow: scroll;
 }
 
@@ -148,7 +148,7 @@ body, html{
 
 .text-center-smaller{
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 1.2em;
+    font-size: 1em;
     font-style: italic;
     text-align: center;
 }
@@ -196,11 +196,22 @@ body, html{
 }
 
 .checkbox-div{
-  width: 20px;
+  width: 10px;
+  margin-right: 5px;
+  height: 10px;
 }
 
-input[type=checkbox]{
-  padding-right: 5px;
+.linkitem{
+  position: relative;
+  top: -10px;
+  left: 25px;
+  width: 220px;
+}
+
+.xbtn-div{
+  position: relative;
+  top: -10px;
+  left: 20px;
 }
 
 #article{
