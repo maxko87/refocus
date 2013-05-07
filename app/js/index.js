@@ -1,12 +1,13 @@
 $(document).ready(function() {
 
-    var SUPPORTED_SITES = ["theglobalmail"];
+    var SUPPORTED_SITES = ["theglobalmail", "time"];
 
     var words_per_modal = 25;
     var index = 0;
     var words = []; //each element in an array [p, h] where p = text, h = html
 	var proglinks = []; //list of links in progress bar, [ui.draggable.context.href, obj]
 	var completed = []; //articles that user has finished reading
+    var fullPageContentsRetrieved = false;
 	
 	//populate current progress bar with saved proglinks
 	chrome.extension.sendMessage({action: 'populate_proglinks'}, function(response){});
@@ -14,6 +15,7 @@ $(document).ready(function() {
 
     //FULL OF HACKS
     var focusOnChunk = function() {
+        var fullPageContentsRetrieved = false;
         var text = window.getSelection().toString();
         console.log(text);
         //reset every new selection
@@ -23,6 +25,7 @@ $(document).ready(function() {
         var pre_words = text.split(". ");
         console.log(pre_words);
         index = 0;
+        words = [];
         //convert to [text,html] (actually [text, text] for now)
         for (i=0; i<pre_words.length; i++){
             words.push( [pre_words[i], pre_words[i]] );
@@ -133,6 +136,7 @@ $(document).ready(function() {
 
     function toggleProgressBar(){
     	if(progBarVisible){
+            $('#supported').show();
     		$(".progbar").css("width", "30px");
     		$(".progbar-content").css("visibility", "hidden");
 			$(".refocus-logo").css("visibility", "hidden");
@@ -143,6 +147,7 @@ $(document).ready(function() {
             adjustArticleSize();
     	}
     	else{
+            $('#supported').hide();
     		$(".progbar").css("width", "300px");
     		$(".progbar-content").css("visibility", "visible");
 			$(".refocus-logo").css("visibility", "visible");
@@ -173,6 +178,9 @@ $(document).ready(function() {
     my_site = $(location).attr('href');
     supported = false;
     for (i=0; i<SUPPORTED_SITES.length; i++){
+        console.log("SUPPORTED:");
+        console.log(my_site.indexOf(SUPPORTED_SITES[i]));
+
         if (my_site.indexOf(SUPPORTED_SITES[i]) != -1){
             supported = true;
         }
@@ -238,6 +246,11 @@ $(document).ready(function() {
     var SENTENCES_PER_CHUNK_PREF = 2;
 
     var getFullPageFocusContents = function(){
+
+        if (fullPageContentsRetrieved){
+            return words;
+        }
+        fullPageContentsRetrieved = true;
         //body = $('body').text();
         $('#article').find('p, img, .large-image-box, .small-image-box, .story-header-image').each(function(index, current){
             /**
@@ -354,12 +367,12 @@ $(document).ready(function() {
     // BUTTONS!
     $('#focusBtn').click(function(){
         console.log(window.getSelection());
+        if (!fullPageContentsRetrieved){
+            words = getFullPageFocusContents();
+        }
         if (window.getSelection() != ""){
             focusOnChunk();
         } 
-        if (words.length == 0){
-            words = getFullPageFocusContents();
-        }
         $('#myModal').modal();
         $('#modalContent').html(words[index][1]); //KAI changed from text to html
         fixButtonFocus();

@@ -68,13 +68,22 @@ body, html{
     background-color: rgba(255, 255, 255, 0.0) !important;
 }
 
-#modalContent p{
+#modalContent{
     text-align: justify;
     line-height: 1.5em;
-    font-size: 150%;
     margin-left: 2em;
     margin-right: 2em;
     font-family: arial; 
+    font-size: 20px !important;
+}
+
+#modalContent p{
+    text-align: justify;
+    line-height: 1.5em;
+    margin-left: 2em;
+    margin-right: 2em;
+    font-family: arial; 
+    font-size: 20px !important;
 }
 
 #proglist{
