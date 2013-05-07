@@ -91,7 +91,7 @@ $(document).ready(function() {
                         </div>');
 	
 
-    $("#focusBtn").tooltip()
+    $("#focusBtn").tooltip({trigger: 'manual'});
 
 	var progBarVisible = true;
     var progBarWidth = 300;
@@ -112,6 +112,9 @@ $(document).ready(function() {
     								</div></li> \
                                     <li>\
                                     <a class="clear-completed-text" id="clearCompleted">Clear Completed</a>\
+                                    </li>\
+                                    <li>\
+                                    <a class="help-text" id="help">Help</a>\
                                     </li>\
                                     </ul>\
                                 </div>\
@@ -577,6 +580,12 @@ $(document).ready(function() {
 		}
 		completed = [];
 	});
+
+    $("#help").click(function(){
+        alert('hi');
+        $("#focusBtn").tooltip('show');
+        //$('body').on('click', function(){$("#focusBtn").tooltip('destroy');});
+    });
 	
 	function markActive(item){
 		item.addClass("activelink");
