@@ -64,10 +64,8 @@ function removeFromProg(link) {
 				function(response) {});
 		}
 	});
-	
 
 }
-
 /*
 //Practice with buttons
 chrome.browserAction.onClicked.addListener(function(tab) {
