@@ -65,7 +65,15 @@ function removeFromProg(link) {
 		}
 	});
 	
+
 }
 
+//Practice with buttons
+chrome.browserAction.onClicked.addListener(function(tab) {
+  // No tabs or host permissions needed!
+  chrome.tabs.executeScript({
+	jQuery('#focusBtn').click();
+  });
+});
 
 
