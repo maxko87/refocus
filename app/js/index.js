@@ -465,7 +465,7 @@ $(document).ready(function() {
 		//allow user to remove the link from the progress list
 		$(".xbtn").click(function(){
 			console.log('close link div');
-			$(this).parent().remove();
+			$(this).parent().parent().remove();
 			//need to remove from proglinks
 			for (var i=0; i<proglinks.length; i++) {
 				if (proglinks[i][0] == href){
