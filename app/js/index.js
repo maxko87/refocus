@@ -582,9 +582,8 @@ $(document).ready(function() {
 	});
 
     $("#help").click(function(){
-        alert('hi');
         $("#focusBtn").tooltip('show');
-        //$('body').on('click', function(){$("#focusBtn").tooltip('destroy');});
+        setTimeout(function(){$("#focusBtn").tooltip('destroy');},2000);
     });
 	
 	function markActive(item){
