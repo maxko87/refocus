@@ -52,6 +52,10 @@ function addToProg(link, name) {
 	});
 }
 
+chrome.browserAction.onClicked.addListener(function(tab){
+  chrome.tabs.executeScript(null, {code:"$('#focusBtn').click();"});
+});
+
 //remove from saved progress list
 function removeFromProg(link) {
 	//search for url in the list, then splice
@@ -64,15 +68,5 @@ function removeFromProg(link) {
 				function(response) {});
 		}
 	});
-
 }
-/*
-//Practice with buttons
-chrome.browserAction.onClicked.addListener(function(tab) {
-  // No tabs or host permissions needed!
-  chrome.tabs.executeScript({
-	jQuery('#focusBtn').click();
-  });
-});
-*/
 
