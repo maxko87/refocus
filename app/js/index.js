@@ -13,9 +13,177 @@ $(document).ready(function() {
 	chrome.extension.sendMessage({action: 'populate_proglinks'}, function(response){});
 	console.log('populate proglinks message sent');
 
+    function getSelectionHtml() {
+        var html = "";
+        if (typeof window.getSelection != "undefined") {
+            var sel = window.getSelection();
+            if (sel.rangeCount) {
+                var container = document.createElement("div");
+                for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+                    container.appendChild(sel.getRangeAt(i).cloneContents());
+                }
+                html = container.innerHTML;
+            }
+        } else if (typeof document.selection != "undefined") {
+            if (document.selection.type == "Text") {
+                html = document.selection.createRange().htmlText;
+            }
+        }
+        console.log("getting selection html");
+        console.log(html);
+        return "<div>" + html + "</div>";
+    }
+
+    var focusHelper = function(html_of_selection){
+        words = [];
+        index = 0;
+        $(html_of_selection).find('p, img, .large-image-box, .small-image-box, .story-header-image').each(function(index, current){
+            /**
+            if ( $(current).is('img') ){
+                console.log(current);
+                console.log($(current));
+                var caption = "<p>" + current.alt + "</p>";
+                var image = "<p>" + current + "</p>";
+                var captioned_image = "<p>" + image + caption + "</p>";
+                console.log(current.alt);
+                console.log(caption);
+                console.log(captioned_image);
+                if (current.height > 100 && current.width > 100){
+                    //words.push([captioned_image, captioned_image]); TODO
+                    words.push([$(current).clone(), $(current).clone()]);
+                }
+            }
+            **/
+            
+            if ( $(current).is('.large-image-box') ){
+                console.log('large image box found');
+                var $newdiv = $(current).clone();
+                $newdiv.find('.attribution').remove();
+                $newdiv.find('img').click(function(e){
+                    e.preventDefault();
+                });
+                words.push([$newdiv, $newdiv]);
+            }
+            
+            else if ( $(current).is('.small-image-box') ){
+                console.log('small image box found');
+                var $newdiv = $(current).clone();
+                $newdiv.find('.attribution').remove();
+                $newdiv.find('img').click(function(e){
+                    e.preventDefault();
+                });
+                words.push([$newdiv, $newdiv]);
+            }
+            
+            else if ( $(current).is('.story-header-image') ){
+                console.log('story header image found');
+                var $newdiv = $(current).clone();
+                $newdiv.find('.attribution').remove();
+                $newdiv.find('img').click(function(e){
+                    e.preventDefault();
+                });
+                words.push([$newdiv, $newdiv]);
+            }
+
+            else{
+                var p = $(current).text();
+                
+                var h = $(current).context.outerHTML;
+                
+                if (p.length > MIN_CHAR_MODAL_LEN){
+                    if (p.length < MAX_CHAR_MODAL_LEN){
+                        words.push([p,h]); //keep both text (p) and html (h) 
+                    }
+                    else {
+                        var prelim_words = p.split("\w\w\w. ");
+                        var prelim_words_html = h.split("\w\w\w. ");
+
+                        var queue = "";
+                        var queue_html = "";
+                        var j = 0;
+
+                        for (i=0; i<prelim_words.length; i++){
+                            if (j < SENTENCES_PER_CHUNK_PREF){
+                                queue += prelim_words[i] + ". ";
+                                queue_html += "<p>" + prelim_words_html[i] + ". "; // ????? add period
+                                j += 1;
+                            }
+                            else if (j == SENTENCES_PER_CHUNK_PREF){
+                                j = 0;
+                                words.push([queue, queue_html]);
+                                queue = "";
+                                queue_html = "";
+                            }
+                        }
+                        if (queue.length != 0){
+                            words.push([queue, queue_html]);
+                        }
+                    }
+                }   
+            }
+        });
+
+        //remove some crap (sentences starting w/ lowercase letters, not ending in periods)
+        var final_words = []
+        for (i=0; i<words.length; i++){
+            var string_html = words[i][1];
+            console.log(string_html.toString());
+            if (string_html.toString().indexOf("[object Object]") === -1) {
+                console.log("STRING HTML:");
+                console.log(string_html.toString());
+                if (string_html.lastIndexOf(".") > string_html.lastIndexOf("</p>") && string_html.lastIndexOf("</p>") > string_html.length - 8){
+                    words[i][1] = string_html.substring(0, string_html.lastIndexOf("."));
+                }
+                var string = words[i][0];
+                if (string.charAt(0) == string.toUpperCase().charAt(0)){
+                    final_words.push(words[i]);
+                }
+            }
+            else{
+                final_words.push(words[i]);
+            }
+        }
+        console.log("final words:");
+        console.log(final_words);
+        return final_words;
+    }
+
+    var getFullPageFocusContents = function(){
+
+        if (fullPageContentsRetrieved){
+            return words;
+        }
+        fullPageContentsRetrieved = true;
+        //body = $('body').text();
+        var result = focusHelper(article);
+        return result;
+    }
+    
+    var focusOnChunk = function() {
+        fullPageContentsRetrieved = false;
+        var result = focusHelper(getSelectionHtml());
+        var new_words = []
+        for (i=0; i<words.length; i++){
+            console.log("WHAT");
+            console.log(words[i][1]);
+            console.log(typeof words[i][1].toString);
+            //if (typeof words[i][1].toString === 'function' && words[i][1].toString().charAt(0) !== "<" && words[i][0].toString().charAt(0).toUpperCase() == words[i][0].toString().charAt(0)){
+            if (words[i][0].toString().charAt(0).toUpperCase() == words[i][0].toString().charAt(0)){    
+                new_words.push(words[i]);
+                console.log("new words push");
+            }
+        }
+        words = new_words;
+        $('#myModal').modal();
+        $('#modalContent').text(words[0][0]);
+        fixButtonFocus();
+    }
+    
+
+    /*
     //FULL OF HACKS
     var focusOnChunk = function() {
-        var fullPageContentsRetrieved = false;
+        fullPageContentsRetrieved = false;
         var text = window.getSelection().toString();
         console.log(text);
         //reset every new selection
@@ -41,6 +209,8 @@ $(document).ready(function() {
         fixButtonFocus();
         console.log(words);
     }
+
+    */
  
 	//make sure this still works for the focus on text
     chrome.extension.onMessage.addListener(
@@ -178,8 +348,6 @@ $(document).ready(function() {
     my_site = $(location).attr('href');
     supported = false;
     for (i=0; i<SUPPORTED_SITES.length; i++){
-        console.log("SUPPORTED:");
-        console.log(my_site.indexOf(SUPPORTED_SITES[i]));
 
         if (my_site.indexOf(SUPPORTED_SITES[i]) != -1){
             supported = true;
@@ -243,126 +411,7 @@ $(document).ready(function() {
     //this will need to be smarter about what text on the page to return.
     var MAX_CHAR_MODAL_LEN = 350;
     var MIN_CHAR_MODAL_LEN = 30;
-    var SENTENCES_PER_CHUNK_PREF = 2;
-
-    var getFullPageFocusContents = function(){
-
-        if (fullPageContentsRetrieved){
-            return words;
-        }
-        fullPageContentsRetrieved = true;
-        //body = $('body').text();
-        $('#article').find('p, img, .large-image-box, .small-image-box, .story-header-image').each(function(index, current){
-            /**
-			if ( $(current).is('img') ){
-                console.log(current);
-                console.log($(current));
-                var caption = "<p>" + current.alt + "</p>";
-                var image = "<p>" + current + "</p>";
-                var captioned_image = "<p>" + image + caption + "</p>";
-				console.log(current.alt);
-				console.log(caption);
-                console.log(captioned_image);
-                if (current.height > 100 && current.width > 100){
-                    //words.push([captioned_image, captioned_image]); TODO
-                    words.push([$(current).clone(), $(current).clone()]);
-                }
-            }
-			**/
-			
-			if ( $(current).is('.large-image-box') ){
-				console.log('large image box found');
-				var $newdiv = $(current).clone();
-				$newdiv.find('.attribution').remove();
-				$newdiv.find('img').click(function(e){
-					e.preventDefault();
-				});
-				words.push([$newdiv, $newdiv]);
-			}
-			
-			if ( $(current).is('.small-image-box') ){
-				console.log('small image box found');
-				var $newdiv = $(current).clone();
-				$newdiv.find('.attribution').remove();
-				$newdiv.find('img').click(function(e){
-					e.preventDefault();
-				});
-				words.push([$newdiv, $newdiv]);
-			}
-			
-			if ( $(current).is('.story-header-image') ){
-				console.log('story header image found');
-				var $newdiv = $(current).clone();
-				$newdiv.find('.attribution').remove();
-				$newdiv.find('img').click(function(e){
-					e.preventDefault();
-				});
-				words.push([$newdiv, $newdiv]);
-			}
-
-            else{
-                var p = $(current).text();
-    			
-    			var h = $(current).context.outerHTML;
-    			
-                if (p.length > MIN_CHAR_MODAL_LEN){
-                    if (p.length < MAX_CHAR_MODAL_LEN){
-                        words.push([p,h]); //keep both text (p) and html (h) 
-                    }
-                    else {
-                        var prelim_words = p.split("\w\w\w. ");
-                        var prelim_words_html = h.split("\w\w\w. ");
-
-                        var queue = "";
-                        var queue_html = "";
-                        var j = 0;
-
-                        for (i=0; i<prelim_words.length; i++){
-                            if (j < SENTENCES_PER_CHUNK_PREF){
-                                queue += prelim_words[i] + ". ";
-                                queue_html += "<p>" + prelim_words_html[i] + ". "; // ????? add period
-                                j += 1;
-                            }
-                            else if (j == SENTENCES_PER_CHUNK_PREF){
-                                j = 0;
-                                words.push([queue, queue_html]);
-                                queue = "";
-                                queue_html = "";
-                            }
-                        }
-                        if (queue.length != 0){
-                            words.push([queue, queue_html]);
-                        }
-                    }
-                }	
-            }
-        });
-
-        //remove some crap (sentences starting w/ lowercase letters, not ending in periods)
-        var final_words = []
-        for (i=0; i<words.length; i++){
-            var string_html = words[i][1];
-            console.log(string_html.toString());
-            if (string_html.toString().indexOf("[object Object]") === -1) {
-                console.log("STRING HTML:");
-                console.log(string_html.toString());
-                if (string_html.lastIndexOf(".") > string_html.lastIndexOf("</p>") && string_html.lastIndexOf("</p>") > string_html.length - 8){
-                    words[i][1] = string_html.substring(0, string_html.lastIndexOf("."));
-                }
-                var string = words[i][0];
-                if (string.charAt(0) == string.toUpperCase().charAt(0)){
-                    final_words.push(words[i]);
-                }
-            }
-            else{
-                final_words.push(words[i]);
-            }
-        }
-        console.log(final_words);
-        return final_words;
-    }
-	
-	
+    var SENTENCES_PER_CHUNK_PREF = 2;	
 
     // BUTTONS!
     $('#focusBtn').click(function(){
