@@ -155,7 +155,7 @@ $(document).ready(function() {
         }
         fullPageContentsRetrieved = true;
         //body = $('body').text();
-        var result = focusHelper(article);
+        var result = focusHelper(".story-content");
         return result;
     }
     
