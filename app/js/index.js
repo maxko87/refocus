@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var SUPPORTED_SITES = ["theglobalmail", "time."];
+    var SUPPORTED_SITES = ["theglobalmail"];
 
     var words_per_modal = 25;
     var index = 0;
