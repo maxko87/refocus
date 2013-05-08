@@ -92,8 +92,6 @@ $(document).ready(function() {
 
             else {//if ( $(current).is('p') ){
                 var p = $(current).text();
-				console.log("p.length = " + p.length);
-				console.log("check for a period...");
 				console.log(p[p.length - 1]);
                 
 				var h = $(current).context.innerHTML;
@@ -102,9 +100,7 @@ $(document).ready(function() {
                     if (p.length < MAX_CHAR_MODAL_LEN){
                         words.push([p,h]); //keep both text (p) and html (h)
                     }
-                    else {
-						console.log("need to split paragraph");
-						
+                    else {						
 						var prelim_words = p.split(". ");
                         var prelim_words_html = h.split(". ");
 
@@ -114,18 +110,42 @@ $(document).ready(function() {
 
                         for (i=0; i<prelim_words.length; i++){
                             if (j < SENTENCES_PER_CHUNK_PREF){
-                                queue += prelim_words[i] + ". ";
-                                queue_html += prelim_words_html[i] + ". ";
+								if (i == prelim_words.length -1){
+									queue += prelim_words[i];
+									queue_html += prelim_words_html[i];
+								}
+								else {
+									queue += prelim_words[i] + ". ";
+									queue_html += prelim_words_html[i] + ". ";
+								}
+								
+								//queue += prelim_words[i] + ". ";
+								//queue_html += prelim_words_html[i] + ". ";
+                                
 								j += 1;
                             }
                             else if (j == SENTENCES_PER_CHUNK_PREF){
                                 j = 0;
                                 words.push([queue, queue_html]);
-								queue = prelim_words[i] + ". ";
-                                queue_html = prelim_words_html[i] + ". ";
+								if (i == prelim_words.length -1){
+									queue = prelim_words[i];
+									queue_html = prelim_words_html[i];
+								}
+								else {
+									queue = prelim_words[i] + ". ";
+									queue_html = prelim_words_html[i] + ". ";
+								}
+								//queue = prelim_words[i] + ". ";
+                                //queue_html = prelim_words_html[i] + ". ";
                             }
                         }
                         if (queue.length > 0){
+							console.log("should be a period");
+							console.log(queue[queue.length-2]);
+							/**if (queue[queue.length-2] == "."){
+								queue.splice(queue.length-2, 2);
+								queue_html.splice(queue_html.length-2, 2);
+							}**/
                             words.push([queue, queue_html]);
 							console.log("rest of split got pushed");
                         }
@@ -438,8 +458,8 @@ $(document).ready(function() {
             }, 500);
         }
 
-        $("#modalContent > p > a").on("click", function(e){
-
+        //set listener for clicks
+        $("#modalContent > a").on("click", function(e){
             console.log('add to progress bar');
             
             e.preventDefault();
