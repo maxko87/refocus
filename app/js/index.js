@@ -364,8 +364,8 @@ $(document).ready(function() {
 
 
     function toggleProgressBar(){
-    	if(progBarVisible){
-            $('#supported').show();
+    	if(progBarVisible){ //hiding progbar
+            $('#supported').hide();
     		//$(".progbar").css("width", "30px");
             $(".progbar").animate({
                 width: "30px"
@@ -378,8 +378,8 @@ $(document).ready(function() {
     		progBarVisible = false;
             adjustArticleSize(30);
     	}
-    	else{
-            $('#supported').hide();
+    	else{ //showing progbar
+            $('#supported').show();
     		//$(".progbar").css("width", "300px");
             $(".progbar").animate({
                 width: "300px"
