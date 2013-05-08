@@ -157,21 +157,23 @@ $(document).ready(function() {
         //remove some crap (sentences starting w/ lowercase letters, not ending in periods)
         var final_words = []
         for (i=0; i<words.length; i++){
-            var string_html = words[i][1];
-            console.log(string_html.toString());
-            if (string_html.toString().indexOf("[object Object]") === -1) {
-                console.log("STRING HTML:");
+            if (words[i][1]){
+                var string_html = words[i][1];
                 console.log(string_html.toString());
-                if (string_html.lastIndexOf(".") > string_html.lastIndexOf("</p>") && string_html.lastIndexOf("</p>") > string_html.length - 8){
-                    words[i][1] = string_html.substring(0, string_html.lastIndexOf("."));
+                if (string_html.toString().indexOf("[object Object]") === -1) {
+                    console.log("STRING HTML:");
+                    console.log(string_html.toString());
+                    if (string_html.lastIndexOf(".") > string_html.lastIndexOf("</p>") && string_html.lastIndexOf("</p>") > string_html.length - 8){
+                        words[i][1] = string_html.substring(0, string_html.lastIndexOf("."));
+                    }
+                    var string = words[i][0];
+                    if (string.charAt(0) == string.toUpperCase().charAt(0)){
+                        final_words.push(words[i]);
+                    }
                 }
-                var string = words[i][0];
-                if (string.charAt(0) == string.toUpperCase().charAt(0)){
+                else{
                     final_words.push(words[i]);
                 }
-            }
-            else{
-                final_words.push(words[i]);
             }
         }
         console.log("final words:");
@@ -364,8 +366,8 @@ $(document).ready(function() {
 
 
     function toggleProgressBar(){
-    	if(progBarVisible){
-            $('#supported').show();
+    	if(progBarVisible){ //hiding progbar
+            $('#supported').hide();
     		//$(".progbar").css("width", "30px");
             $(".progbar").animate({
                 width: "30px"
@@ -378,8 +380,8 @@ $(document).ready(function() {
     		progBarVisible = false;
             adjustArticleSize(30);
     	}
-    	else{
-            $('#supported').hide();
+    	else{ //showing progbar
+            $('#supported').show();
     		//$(".progbar").css("width", "300px");
             $(".progbar").animate({
                 width: "300px"
