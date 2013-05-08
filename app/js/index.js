@@ -438,33 +438,35 @@ $(document).ready(function() {
             }, 500);
         }
 
-        //set listener for clicks
         $("#modalContent > p > a").on("click", function(e){
+
             console.log('add to progress bar');
             
             e.preventDefault();
             e.returnValue = false;
-			
-			var cont = $(this).context;
-			//don't add duplicates
-			var dup = false;
-			for (var i=0; i<proglinks.length; i++){
-				if (proglinks[i][0] == cont.href){
-					dup = true;
-				}
-			}
-			if (!dup){
-				var res = addToProgress(cont.href, cont.textContent);
-				proglinks.push([cont.href, res]);
-				//send message to background page to update all progress lists
-				chrome.runtime.sendMessage({action: 'add_to_proglist', url: cont.href}, function(response){});
-			     flashSidebar();
- 
+            
+            var cont = $(this).context;
+            //don't add duplicates
+            var dup = false;
+            for (var i=0; i<proglinks.length; i++){
+                if (proglinks[i][0] == cont.href){
+                    dup = true;
+                }
             }
+            if (!dup){
+                var res = addToProgress(cont.href, cont.textContent);
+                proglinks.push([cont.href, res]);
+                //send message to background page to update all progress lists
+                chrome.runtime.sendMessage({action: 'add_to_proglist', url: cont.href}, function(response){});
+                // flashSidebar();
 
-			
+            }
+            
         }); 
     }
+        //set listener for clicks
+        
+    //}
 
     
 
