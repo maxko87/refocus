@@ -333,13 +333,17 @@ $(document).ready(function() {
         var articleWidth = windowSize.slice(0, windowSize.length-2) - progBarWidth.slice(0, progBarWidth.length-2);
         $("#article").css("width",articleWidth+"px");
     }
-    
+
     adjustArticleSize();
+
 
     function toggleProgressBar(){
     	if(progBarVisible){
             $('#supported').show();
-    		$(".progbar").css("width", "30px");
+    		//$(".progbar").css("width", "30px");
+            $(".progbar").animate({
+                width: "30px"
+            },300);
     		$(".progbar-content").css("visibility", "hidden");
 			$(".refocus-logo").css("visibility", "hidden");
             $(".progbar-header").css("visibility", "hidden");
@@ -350,7 +354,10 @@ $(document).ready(function() {
     	}
     	else{
             $('#supported').hide();
-    		$(".progbar").css("width", "300px");
+    		//$(".progbar").css("width", "300px");
+            $(".progbar").animate({
+                width: "300px"
+            },300);
     		$(".progbar-content").css("visibility", "visible");
 			$(".refocus-logo").css("visibility", "visible");
             $(".progbar-header").css("visibility", "visible");
@@ -363,6 +370,17 @@ $(document).ready(function() {
 
     }
 	
+    function flashSidebar(){
+        $(".progbar").animate({
+            width: "50px"
+        }, 500);
+        $(".progbar").animate({
+            width: "30px"
+
+        }, 500);
+
+    }
+
     //modal
     $('body').append('<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> \
                           <div class="modal-header"> \
@@ -435,7 +453,10 @@ $(document).ready(function() {
 				proglinks.push([cont.href, res]);
 				//send message to background page to update all progress lists
 				chrome.runtime.sendMessage({action: 'add_to_proglist', url: cont.href}, function(response){});
-			}
+			     flashSidebar();
+ 
+            }
+
 			
         }); 
     }
@@ -494,6 +515,7 @@ $(document).ready(function() {
     });
     $('#myModal').on('hidden', function () {
         $('#topBar').fadeIn('slow');
+        toggleProgressBar();
     })
 
 
