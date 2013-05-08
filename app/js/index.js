@@ -8,6 +8,7 @@ $(document).ready(function() {
 	var proglinks = []; //list of links in progress bar, [ui.draggable.context.href, obj]
 	var completed = []; //articles that user has finished reading
     var fullPageContentsRetrieved = false;
+	var initialSort = false;
 	
 	 //this will need to be smarter about what text on the page to return.
     var MAX_CHAR_MODAL_LEN = 350;
@@ -294,6 +295,18 @@ $(document).ready(function() {
 				}
 			}
 			//removeFromProgress(request.url);
+		}
+		
+		//if item was reordered progress list
+		if (request.action == "update_proglist_reorder"){
+			console.log('update progress list, reorder');
+			reOrder(request.start, request.end);
+			if (!initialSort){
+				reOrderDivs(request.start, request.end, request.url);
+			}
+			else{
+				initialSort = false;
+			}
 		}
 		
 		if (request.action == "add_from_CM"){
@@ -614,7 +627,9 @@ $(document).ready(function() {
 		var atag = "<div class='linkitem'><a href='"+href+"'>"+title+"</a></div>"; //try either outerText or textContent
 		var closebtn = '<div class="xbtn-div"><button type="button" class="close xbtn" aria-hidden="true">x</button></div>'; 
 		var result = $(string1+closebtn+atag+"</li>");
-		$("#cont-list").prepend(result);
+		//$("#cont-list").prepend(result);
+		var drag = $('.drag-links-here').parent();
+		result.insertBefore(drag);
 		
 		//allow user to remove the link from the progress list
 		$(".xbtn").click(function(){
@@ -674,7 +689,24 @@ $(document).ready(function() {
 	}
 	
 	//sort the items in the progress list.
-	$("#cont-list").sortable(); 
+	$("#cont-list").sortable({
+		start: function(e, ui){
+			var index = ui.item.index();
+			ui.item.data("start_ind", index);
+		}, 
+		stop: function(e, ui){
+			var end_ind = ui.item.index();
+			var start_ind = ui.item.data("start_ind");
+			if (start_ind != end_ind){
+				console.log("different index");
+				var link = ui.item.find('a')[0].href;
+				initialSort = true;
+				chrome.extension.sendMessage({action: 'change_order', start: start_ind, end: end_ind, url:link}, 
+												function(response){});
+			}
+			console.log(index);
+		}
+	}); 
 	$("#cont-list").disableSelection();
 	
 	
@@ -740,6 +772,35 @@ $(document).ready(function() {
 	
 	function markActive(item){
 		item.addClass("activelink");
+	}
+	
+	//reorder in Proglinks
+	function reOrder(start, end){
+		console.log("reorder the proglinks");
+		var item = proglinks[start];
+		proglinks.splice(start, 1);
+		proglinks.splice(end, 0, item);
+		console.log(proglinks);
+	}
+	
+	function reOrderDivs(start, end, url){
+		console.log("reorder the divs");
+		var item = proglinks[end][1];
+		//item.remove();
+		console.log(item);
+		var nextitem;
+		if (end >= proglinks.length){
+			nextitem = $(".drag-links-here").parent();
+			item.insertBefore(nextitem);
+		}
+		else {
+			nextitem= proglinks[end+1][1];
+			console.log("nextitem");
+			console.log(nextitem);
+			item.insertBefore(nextitem[0]);
+		}
+		
+		
 	}
 	
 
