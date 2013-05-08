@@ -302,7 +302,8 @@ $(document).ready(function() {
 				proglinks.push([request.url, res]);
 				//send message to background page to update all progress lists
 				chrome.runtime.sendMessage({action: 'add_to_proglist', url: request.url, title:""}, function(response){});
-			}
+			     flashSidebar();
+            }
 		}
       });
 	
