@@ -130,6 +130,11 @@ body, html{
 
 }
 
+.progbar ul{
+  list-style: none;
+  list-style-image: none;
+}
+
 .progbar-content{
     position: absolute;
     top: 100px;
