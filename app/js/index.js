@@ -459,7 +459,7 @@ $(document).ready(function() {
         }
 
         //set listener for clicks
-        $("#modalContent > p > a").on("click", function(e){
+        $("#modalContent > a").on("click", function(e){
             console.log('add to progress bar');
             
             e.preventDefault();
