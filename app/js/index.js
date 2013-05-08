@@ -42,7 +42,7 @@ $(document).ready(function() {
     var focusHelper = function(html_of_selection){
         words = [];
         index = 0;
-        $(html_of_selection).find('p, img, .large-image-box, .small-image-box, .story-header-image').each(function(index, current){
+        $(html_of_selection).find('p, img, li, .large-image-box, .small-image-box, .story-header-image').each(function(index, current){
             /**
             if ( $(current).is('img') ){
                 console.log(current);
@@ -98,6 +98,10 @@ $(document).ready(function() {
 				
                 if (p.length > MIN_CHAR_MODAL_LEN){
                     if (p.length < MAX_CHAR_MODAL_LEN){
+                        if ( $(current).is('li') ){
+                            p = "○ " + p;
+                            h = "○ " + h;
+                        }
                         words.push([p,h]); //keep both text (p) and html (h)
                     }
                     else {						
