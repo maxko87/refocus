@@ -45,6 +45,9 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse){
 	else if (request.action == "populate_proglinks"){
 		populate();
 	}
+	else if (request.action == "change_order"){
+		reOrder(request.start, request.end, request.url);
+	}
 });
 
 //populate progress bar when page is refreshed or changed
@@ -84,6 +87,23 @@ function removeFromProg(link) {
 	chrome.tabs.getAllInWindow(null, function(tab){
 		for (var i = 0; i<tab.length; i++){
 			chrome.tabs.sendMessage(tab[i].id, {action: "update_proglist_remove", url: link}, 
+				function(response) {});
+		}
+	});
+}
+
+//reorder progress list
+function reOrder(start, end, link) {
+	
+	//reOrder progList somehow
+	var item = progList[start];
+	progList.splice(start, 1);
+	progList.splice(end, 0, item);
+	console.log(progList);
+	
+	chrome.tabs.getAllInWindow(null, function(tab){
+		for (var i = 0; i<tab.length; i++){
+			chrome.tabs.sendMessage(tab[i].id, {action: "update_proglist_reorder", url: link, start: start, end: end}, 
 				function(response) {});
 		}
 	});
