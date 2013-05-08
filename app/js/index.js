@@ -85,7 +85,7 @@ $(document).ready(function() {
                 words.push([$newdiv, $newdiv]);
             }
 
-            else{
+            else if ( $(current).is('p') ){
                 var p = $(current).text();
                 
                 var h = $(current).context.outerHTML;
@@ -110,6 +110,7 @@ $(document).ready(function() {
                             }
                             else if (j == SENTENCES_PER_CHUNK_PREF){
                                 j = 0;
+								queue_html += "</p>";
                                 words.push([queue, queue_html]);
                                 queue = "";
                                 queue_html = "";
@@ -155,7 +156,13 @@ $(document).ready(function() {
         }
         fullPageContentsRetrieved = true;
         //body = $('body').text();
-        var result = focusHelper(article);
+		var result = null;
+		if ($('.story-content').length > 0){
+			result = focusHelper(".story-content"); //for Global Mail
+		}
+        else {
+			result = focusHelper(".entry-content"); //for Time
+		}
         return result;
     }
     
@@ -246,6 +253,21 @@ $(document).ready(function() {
 				}
 			}
 			//removeFromProgress(request.url);
+		}
+		
+		if (request.action == "add_from_CM"){
+			var dup = false;
+			for (var i=0; i<proglinks.length; i++){
+				if (proglinks[i][0] == request.url){
+					dup = true;
+				}
+			}
+			if (!dup){
+				var res = addToProgress(request.url, request.title);
+				proglinks.push([request.url, res]);
+				//send message to background page to update all progress lists
+				chrome.runtime.sendMessage({action: 'add_to_proglist', url: request.url, title:""}, function(response){});
+			}
 		}
       });
 	
@@ -607,7 +629,8 @@ $(document).ready(function() {
 					var newItem = addToProgress(context.href, context.textContent);
 					proglinks.push([context.href, newItem]);
 					//send message to background page to update all progress lists
-					chrome.runtime.sendMessage({action: 'add_to_proglist', url: context.href}, function(response){});
+					chrome.runtime.sendMessage({action: 'add_to_proglist', url: context.href, title: context.textContent}, 
+												function(response){});
 				}
 			}
 
