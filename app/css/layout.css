@@ -30,8 +30,7 @@ body, html{
 
 #topBar{
 	text-align:center;
-    /*background-color: white;*/
-    position: fixed;
+      position: fixed;
     top: 0px;
     left: 40%;
     margin-left: auto;
