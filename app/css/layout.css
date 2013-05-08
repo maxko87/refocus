@@ -30,7 +30,7 @@ body, html{
 
 #topBar{
 	text-align:center;
-    background-color: white;
+    /*background-color: white;*/
     position: fixed;
     top: 0px;
     left: 40%;
@@ -113,7 +113,7 @@ body, html{
 .progbar{
 
     font-family: Georgia, Helvetica, Arial, sans-serif;
-    font-size: 12px;
+    font-size: 15px;
     top: 0px;
     padding-top: 0px;
     z-index: 10000;
@@ -200,6 +200,8 @@ body, html{
 .progitem{
 	position: relative;
 	width: 90%;
+  line-height: 20px;
+  font-size: 15px;
 }
 
 .clear-completed{
