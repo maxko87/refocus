@@ -445,6 +445,9 @@ $(document).ready(function() {
     // BUTTONS!
     $('#focusBtn').click(function(){
         console.log(window.getSelection());
+        if(progBarVisible){
+            toggleProgressBar();
+        }
         if (!fullPageContentsRetrieved){
             words = getFullPageFocusContents();
         }

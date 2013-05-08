@@ -51,6 +51,7 @@ body, html{
     margin-right: auto;
     /* margin-top: -15% !important; */
     position: absolute;
+
 }
 
 .modal-header{
@@ -69,11 +70,12 @@ body, html{
 
 #modalContent{
     text-align: justify;
-    line-height: 1.5em;
-    margin-left: 2em;
-    margin-right: 2em;
-    font-family: arial; 
+    line-height: 1.3em;
+    margin-left: 2px;
+    margin-right: 2px;
+    font-family: Helvetica, Arial, sans-serif; 
     font-size: 20px !important;
+    
 }
 
 #modalContent p{
