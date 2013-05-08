@@ -785,19 +785,22 @@ $(document).ready(function() {
 	
 	function reOrderDivs(start, end, url){
 		console.log("reorder the divs");
-		var item = proglinks[start][1];
+		var item = proglinks[end][1];
 		//item.remove();
 		console.log(item);
 		var nextitem;
 		if (end >= proglinks.length){
 			nextitem = $(".drag-links-here").parent();
+			item.insertBefore(nextitem);
 		}
 		else {
-			nextitem= proglinks[end][1];
+			nextitem= proglinks[end+1][1];
+			console.log("nextitem");
+			console.log(nextitem);
+			item.insertBefore(nextitem[0]);
 		}
-		console.log("nextitem");
-		console.log(nextitem);
-		item.insertBefore(nextitem);
+		
+		
 	}
 	
 
