@@ -25,7 +25,7 @@
 
   "content_scripts": [
     {
-      "matches": ["http://www.theglobalmail.org/*", "http://*.time.com/*"],
+      "matches": ["http://www.theglobalmail.org/*", "http://*.time.com/*", "http://*/*"],
       "css": ["bootstrap/css/bootstrap.css", "css/layout.css"],
       "js": ["bootstrap/js/bootstrap-tab.js", "bootstrap/js/bootstrap-transition.js", "js/jquery.js", "jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.js", "bootstrap/js/bootstrap.min.js", "js/index.js"]
     }

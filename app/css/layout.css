@@ -105,7 +105,7 @@ body, html{
 .progbar{
 
     font-family: Georgia, Helvetica, Arial, sans-serif;
-    font-size: 15px;
+    font-size: 15px !important;
     top: 0px;
     padding-top: 0px;
     z-index: 10000;
@@ -139,8 +139,8 @@ body, html{
 }
 
 .text-center{
-    font-family: Georgia, Helvetica, Arial, sans-serif;
-    font-size: 20px;
+    font-family: Georgia, Helvetica, Arial, sans-serif !important;
+    font-size: 20px !important;
     color: grey;
     font-weight: 2pt;
     font-style: italic;
@@ -149,8 +149,8 @@ body, html{
 }
 
 .text-center-smaller{
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 15px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-size: 15px !important;
     font-style: italic;
     text-align: center;
 }
@@ -242,6 +242,7 @@ margin: 0 0 30px 30px;
   margin-top: 2.5px;
   margin-bottom: 2.5px;
   line-height: 20px;
+  text-align: left;
 }
 
 .xbtn-div{
