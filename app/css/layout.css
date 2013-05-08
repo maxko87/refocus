@@ -278,6 +278,20 @@ margin: 0 0 30px 30px;
 
 /*Yo*/
 
+.primary-links a {
+white-space: nowrap;
+font-family: "franklin-gothic-urw", Helvetica, Arial, sans-serif;
+display: block;
+font-weight: 900;
+text-transform: uppercase;
+color: #000;
+padding: 0 5px;
+height: 27px;
+line-height: 27px;
+margin: -6px 0 -8px 0;
+text-align: center;
+}
+
 #article nav{background-color:#eee;border-bottom:1px solid #f4f4f4;margin:0 0 30px 0;position:relative;z-index:200}
 #article nav .row{position:relative}
 #article nav .nav-inner{border-bottom:1px solid #e0e0e0}

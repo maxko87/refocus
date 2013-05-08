@@ -310,7 +310,7 @@ $(document).ready(function() {
 
 
     //setup page
-    $('body').children().wrapAll('<div id="article" class="container-fluid scrollable article-content"/>');
+    $('body').children().wrapAll('<div id="article" class="container-fluid scrollable article-content '+site+" />');
 	
 	
 
