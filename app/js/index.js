@@ -9,6 +9,11 @@ $(document).ready(function() {
 	var completed = []; //articles that user has finished reading
     var fullPageContentsRetrieved = false;
 	
+	 //this will need to be smarter about what text on the page to return.
+    var MAX_CHAR_MODAL_LEN = 350;
+    var MIN_CHAR_MODAL_LEN = 30;
+    var SENTENCES_PER_CHUNK_PREF = 2;
+	
 	//populate current progress bar with saved proglinks
 	chrome.extension.sendMessage({action: 'populate_proglinks'}, function(response){});
 	console.log('populate proglinks message sent');
@@ -110,7 +115,7 @@ $(document).ready(function() {
                             }
                             else if (j == SENTENCES_PER_CHUNK_PREF){
                                 j = 0;
-								queue_html += "</p>";
+								//queue_html += "</p>";
                                 words.push([queue, queue_html]);
                                 queue = "";
                                 queue_html = "";
@@ -156,12 +161,17 @@ $(document).ready(function() {
         }
         fullPageContentsRetrieved = true;
         //body = $('body').text();
+		//var result = focusHelper(article);
 		var result = null;
-		if ($('.story-content').length > 0){
+		if ($(".story-content").length > 0){
 			result = focusHelper(".story-content"); //for Global Mail
 		}
-        else {
+        else if ($(".entry-content").length > 0){
 			result = focusHelper(".entry-content"); //for Time
+			
+		}
+		else {
+			result = focusHelper(article);
 		}
         return result;
     }
@@ -430,10 +440,7 @@ $(document).ready(function() {
         }); 
     }
 
-    //this will need to be smarter about what text on the page to return.
-    var MAX_CHAR_MODAL_LEN = 350;
-    var MIN_CHAR_MODAL_LEN = 30;
-    var SENTENCES_PER_CHUNK_PREF = 2;	
+    
 
     // BUTTONS!
     $('#focusBtn').click(function(){
