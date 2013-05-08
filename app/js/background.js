@@ -6,7 +6,6 @@ function onClickHandler(info, tab) {
   });
 };
 
-// Set up context menu tree at install time. //TODO: fix this so that it's not onInstalled
 chrome.runtime.onInstalled.addListener(function() {
   var id = chrome.contextMenus.create({"title": "Focus on Selection", "contexts": ["selection"],
                                          "id": "context_selection",
@@ -18,11 +17,11 @@ chrome.runtime.onInstalled.addListener(function() {
 chrome.contextMenus.create({"title": "Add to Progress List", "contexts": ["link"], 
 								"id": "link_selection", 
 								"onclick": function(info, tab){
-									console.log('clicked context menu item')
-									chrome.tabs.sendMessage(tab.id, {action: "add_from_CM"});
-									//TODO: retrieve link that was clicked on (url + title)
+									console.log('clicked context menu item');
+									//var linkurl = chrome.contextMenus.onClickData.linkURL();
+									chrome.tabs.sendMessage(tab.id, {action: "add_from_CM", url:info.linkURL, title: ""});
 								}
-								});
+							});
 
 								
 //chrome.contextMenus.onClicked.addListener(onClickHandler);

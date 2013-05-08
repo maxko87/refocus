@@ -247,6 +247,21 @@ $(document).ready(function() {
 			}
 			//removeFromProgress(request.url);
 		}
+		
+		if (request.action == "add_from_CM"){
+			var dup = false;
+			for (var i=0; i<proglinks.length; i++){
+				if (proglinks[i][0] == request.url){
+					dup = true;
+				}
+			}
+			if (!dup){
+				var res = addToProgress(request.url, request.title);
+				proglinks.push([request.url, res]);
+				//send message to background page to update all progress lists
+				chrome.runtime.sendMessage({action: 'add_to_proglist', url: request.url, title:""}, function(response){});
+			}
+		}
       });
 	
 
@@ -607,7 +622,8 @@ $(document).ready(function() {
 					var newItem = addToProgress(context.href, context.textContent);
 					proglinks.push([context.href, newItem]);
 					//send message to background page to update all progress lists
-					chrome.runtime.sendMessage({action: 'add_to_proglist', url: context.href}, function(response){});
+					chrome.runtime.sendMessage({action: 'add_to_proglist', url: context.href, title: context.textContent}, 
+												function(response){});
 				}
 			}
 
