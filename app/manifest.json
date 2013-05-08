@@ -6,6 +6,7 @@
 
   "background": {
     "scripts": ["js/jquery.js", "js/background.js"]
+
   },
   "icons": {
     "16": "icon-16.png",

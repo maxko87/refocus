@@ -13,6 +13,13 @@ chrome.runtime.onInstalled.addListener(function() {
 										 });
 });
 
+chrome.runtime.onStartup.addListener(function() {
+  var id = chrome.contextMenus.create({"title": "Focus on Selection", "contexts": ["selection"],
+                                         "id": "context_selection",
+										 "onclick": onClickHandler
+										 });
+});
+
 //set up context menu option for adding link to queue
 chrome.contextMenus.create({"title": "Add to Progress List", "contexts": ["link"], 
 								"id": "link_selection", 
