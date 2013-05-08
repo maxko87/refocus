@@ -90,18 +90,23 @@ $(document).ready(function() {
                 words.push([$newdiv, $newdiv]);
             }
 
-            else if ( $(current).is('p') ){
+            else {//if ( $(current).is('p') ){
                 var p = $(current).text();
+				console.log("p.length = " + p.length);
+				console.log("check for a period...");
+				console.log(p[p.length - 1]);
                 
-                var h = $(current).context.outerHTML;
-                
+				var h = $(current).context.innerHTML;
+				
                 if (p.length > MIN_CHAR_MODAL_LEN){
                     if (p.length < MAX_CHAR_MODAL_LEN){
-                        words.push([p,h]); //keep both text (p) and html (h) 
+                        words.push([p,h]); //keep both text (p) and html (h)
                     }
                     else {
-                        var prelim_words = p.split("\w\w\w. ");
-                        var prelim_words_html = h.split("\w\w\w. ");
+						console.log("need to split paragraph");
+						
+						var prelim_words = p.split(". ");
+                        var prelim_words_html = h.split(". ");
 
                         var queue = "";
                         var queue_html = "";
@@ -110,19 +115,19 @@ $(document).ready(function() {
                         for (i=0; i<prelim_words.length; i++){
                             if (j < SENTENCES_PER_CHUNK_PREF){
                                 queue += prelim_words[i] + ". ";
-                                queue_html += "<p>" + prelim_words_html[i] + ". "; // ????? add period
-                                j += 1;
+                                queue_html += prelim_words_html[i] + ". ";
+								j += 1;
                             }
                             else if (j == SENTENCES_PER_CHUNK_PREF){
                                 j = 0;
-								//queue_html += "</p>";
                                 words.push([queue, queue_html]);
-                                queue = "";
-                                queue_html = "";
+								queue = prelim_words[i] + ". ";
+                                queue_html = prelim_words_html[i] + ". ";
                             }
                         }
-                        if (queue.length != 0){
+                        if (queue.length > 0){
                             words.push([queue, queue_html]);
+							console.log("rest of split got pushed");
                         }
                     }
                 }   
