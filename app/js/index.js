@@ -85,7 +85,7 @@ $(document).ready(function() {
                 words.push([$newdiv, $newdiv]);
             }
 
-            else{
+            else if ( $(current).is('p') ){
                 var p = $(current).text();
                 
                 var h = $(current).context.outerHTML;
@@ -110,6 +110,7 @@ $(document).ready(function() {
                             }
                             else if (j == SENTENCES_PER_CHUNK_PREF){
                                 j = 0;
+								queue_html += "</p>";
                                 words.push([queue, queue_html]);
                                 queue = "";
                                 queue_html = "";
@@ -155,7 +156,13 @@ $(document).ready(function() {
         }
         fullPageContentsRetrieved = true;
         //body = $('body').text();
-        var result = focusHelper(".story-content");
+		var result = null;
+		if ($('.story-content').length > 0){
+			result = focusHelper(".story-content"); //for Global Mail
+		}
+        else {
+			result = focusHelper(".entry-content"); //for Time
+		}
         return result;
     }
     
