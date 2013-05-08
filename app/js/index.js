@@ -353,14 +353,14 @@ $(document).ready(function() {
 					</div> ');
 
 
-    function adjustArticleSize(){
+    function adjustArticleSize(progBarWidth){
         var windowSize = $("body").css("width");
-        progBarWidth = $(".progbar").css("width");
-        var articleWidth = windowSize.slice(0, windowSize.length-2) - progBarWidth.slice(0, progBarWidth.length-2);
+        var articleWidth = windowSize.slice(0, windowSize.length-2) - progBarWidth;
         $("#article").css("width",articleWidth+"px");
+
     }
 
-    adjustArticleSize();
+    adjustArticleSize(300);
 
 
     function toggleProgressBar(){
@@ -376,7 +376,7 @@ $(document).ready(function() {
 			$(".hide-arrow").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_unhide_arrow.png)");
 			//$(".hide-arrow:hover").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_unhide_arrow.png)");
     		progBarVisible = false;
-            adjustArticleSize();
+            adjustArticleSize(30);
     	}
     	else{
             $('#supported').hide();
@@ -384,6 +384,7 @@ $(document).ready(function() {
             $(".progbar").animate({
                 width: "300px"
             },300);
+
     		$(".progbar-content").css("visibility", "visible");
 			$(".refocus-logo").css("visibility", "visible");
             $(".progbar-header").css("visibility", "visible");
@@ -391,7 +392,7 @@ $(document).ready(function() {
 			//$(".hide-arrow:hover").css("background-image", "url(http://web.mit.edu/anvishap/www/refocus/grey_hide_arrow.png)");
 
     		progBarVisible = true;
-            adjustArticleSize();
+            adjustArticleSize(300);
     	}
 
     }
