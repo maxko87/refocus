@@ -458,7 +458,7 @@ $(document).ready(function() {
                 proglinks.push([cont.href, res]);
                 //send message to background page to update all progress lists
                 chrome.runtime.sendMessage({action: 'add_to_proglist', url: cont.href}, function(response){});
-                // flashSidebar();
+                 flashSidebar();
 
             }
             
