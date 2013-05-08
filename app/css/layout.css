@@ -113,6 +113,7 @@ body, html{
 .progbar{
 
     font-family: Georgia, Helvetica, Arial, sans-serif;
+    font-size: 12px;
     top: 0px;
     padding-top: 0px;
     z-index: 10000;
@@ -147,7 +148,7 @@ body, html{
 
 .text-center{
     font-family: Georgia, Helvetica, Arial, sans-serif;
-    font-size: 1.4em;
+    font-size: 20px;
     color: grey;
     font-weight: 2pt;
     font-style: italic;
@@ -157,7 +158,7 @@ body, html{
 
 .text-center-smaller{
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 1em;
+    font-size: 15px;
     font-style: italic;
     text-align: center;
 }
@@ -168,6 +169,8 @@ body, html{
     border-style: none;
 
 }
+
+
 
 .hide-arrow, .hide-arrow:visited{
     background-image: url('http://web.mit.edu/anvishap/www/refocus/grey_hide_arrow.png') ;
@@ -202,6 +205,13 @@ body, html{
 .clear-completed{
     position: relative;
     top: -20%;
+    left: 10px;
+}
+
+.help-text{
+  position: relative;
+  top: -30px;
+  left: 220px;
 }
 
 .checkbox-div{
