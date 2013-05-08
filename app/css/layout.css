@@ -75,16 +75,7 @@ body, html{
     margin-right: 15px;
     font-family: Helvetica, Arial, sans-serif; 
     font-size: 20px !important;
-    
-}
-
-#modalContent p{
-    text-align: justify;
-    line-height: 1.5em;
-    margin-left: 2em;
-    margin-right: 2em;
-    font-family: arial; 
-    font-size: 20px !important;
+    word-spacing: -2px;
 }
 
 #proglist{
