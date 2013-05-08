@@ -242,7 +242,7 @@ body, html{
     overflow: auto;
 }
 
-.activelink{
+.activelink{  
 	font-weight:bold;
 }
 
