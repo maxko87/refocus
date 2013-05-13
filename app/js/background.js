@@ -21,7 +21,7 @@ chrome.runtime.onStartup.addListener(function() {
 });
 
 //set up context menu option for adding link to queue
-chrome.contextMenus.create({"title": "Add to Progress List", "contexts": ["link"], 
+chrome.contextMenus.create({"title": "Add link to Sidebar", "contexts": ["link"], 
 								"id": "link_selection", 
 								"onclick": function(info, tab){
 									console.log('clicked context menu item');
