@@ -357,7 +357,9 @@ $(document).ready(function() {
                             <div class="progbar-body">\
                                 <div class="progbar-content scrollable">\
         							<ul id="cont-list">\
-        							<li><div class="drag-links-here">\
+                                    </ul>\
+									<ul id="refocus-help">\
+									<li><div class="drag-links-here">\
     									<p class="text-center-smaller">Drag and drop links that you want to explore later</p> \
     								</div></li> \
                                     <li>\
@@ -366,7 +368,7 @@ $(document).ready(function() {
                                     <li>\
                                     <a class="help-text" id="help">Help</a>\
                                     </li>\
-                                    </ul>\
+									</ul>\
                                 </div>\
                             <div class=error id=supported></div> \
 					</div> ');
@@ -568,12 +570,14 @@ $(document).ready(function() {
 
 
     //map keyboard shortcuts to stuff
+	/**
     $('html').keypress(function(e){
         var c = String.fromCharCode(e.which);
         if (c === "f"){
             $('#focusBtn').click();
         }
     });
+	**/
 
     $('html').keydown(function(e){
         if (e.keyCode == 37 && $('#myModal').data('modal').isShown ) { //left arrow
@@ -627,9 +631,10 @@ $(document).ready(function() {
 		var atag = "<div class='linkitem'><a href='"+href+"'>"+title+"</a></div>"; //try either outerText or textContent
 		var closebtn = '<div class="xbtn-div"><button type="button" class="close xbtn" aria-hidden="true">x</button></div>'; 
 		var result = $(string1+closebtn+atag+"</li>");
+		$("#cont-list").append(result);
 		//$("#cont-list").prepend(result);
-		var drag = $('.drag-links-here').parent();
-		result.insertBefore(drag);
+		//var drag = $('.drag-links-here').parent();
+		//result.insertBefore(drag);
 		
 		//allow user to remove the link from the progress list
 		$(".xbtn").click(function(){
