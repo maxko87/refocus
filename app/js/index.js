@@ -630,7 +630,8 @@ $(document).ready(function() {
 		var string1 = "<li class='progitem'><div class='checkbox-div'><input type='checkbox'/></div>";
 		var atag = "<div class='linkitem'><a href='"+href+"'>"+title+"</a></div>"; //try either outerText or textContent
 		var closebtn = '<div class="xbtn-div"><button type="button" class="close xbtn" aria-hidden="true">x</button></div>'; 
-		var result = $(string1+closebtn+atag+"</li>");
+		//var closebtn = '<button type="button" class="close xbtn" aria-hidden="true">x</button></div>'; 
+		var result = $(string1+atag+closebtn+"</li>");
 		$("#cont-list").append(result);
 		//$("#cont-list").prepend(result);
 		//var drag = $('.drag-links-here').parent();
